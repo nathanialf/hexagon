@@ -1,0 +1,30 @@
+Design Doc: HexCell(needs name)
+
+Gameplay:
+- No fucking clue yet
+
+
+Art:
+- Particle loop background similar to braid with space atmosphere
+	- No clue how to do it
+- Random map generation. Doesn't go forever. At max with current algorithm is 1000
+
+
+Hexagon Map Generation:
+- Start with Base Hexagon
+	- Player Starts there
+- Keep a value to see if you need to restart the generation from a new cell
+	- if needs restarted, find the first instance of a cell with a free adjacent cell
+	- stop the search there.
+	- if it doesn't need restarted it gets the last generated cell
+	- selected cell is the new base for generation
+-random generates how many cells you want to generate adjacent to base
+-count how many free adjacent cells are to the base cell
+	- if the random number is more than possible for the base cell, the random number becomes the adjacent number
+	- if there is no adjacent cells stop current pass-through and restart with it needing restarted
+- repeats for the adjacent number or random number
+	- randomly generates position of next cell
+	- if its empty create cell
+	- if not, failed loop passthrough, still counts to counter for loop but not cell count
+	- check adjacent and if it can be drawn(performance purposes)
+- repeat whole generation passthrough without need for reset
