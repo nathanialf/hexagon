@@ -1,44 +1,27 @@
 package Menu.Component.MenuButtons;
 
-import Main.Game;
 import Menu.Component.MenuButton;
 import Menu.Component.MenuElement;
+import Menu.Component.MenuButtons.MenuElements.SoundToggleElement;
 
 public class AudioButton extends MenuButton
 {
-	String sound;
 	public AudioButton() 
 	{
-		if (!Game.muted)
-		{
-			sound = "ON";
-		}
-		else
-		{
-			sound = "OFF";
-		}
-		this.text = "AUDIO: " + sound;
+		this.text = "AUDIO";
+		
+		elements.add(new SoundToggleElement());
 	}
 	
 	public void update(int delta)
 	{
-		this.text = "AUDIO: " + sound;
-
-		for (MenuElement e : elements)
-			e.update(delta);
+		for (MenuElement m : elements)
+		{
+			m.update(delta);
+		}
 	}
 	
 	public void activate()
 	{
-		if (Game.muted)
-		{
-			Game.muted = false;
-			sound = "ON";
-		}
-		else
-		{
-			Game.muted = true;
-			sound = "OFF";
-		}
 	}
 }

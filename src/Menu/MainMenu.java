@@ -1,10 +1,8 @@
 package Menu;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Polygon;
 
 import Main.Game;
-import Menu.Component.MenuElement;
 import Menu.Component.MenuButtons.*;
 
 public class MainMenu extends Menu

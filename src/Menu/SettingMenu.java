@@ -1,7 +1,6 @@
 package Menu;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.gui.TextField;
 
 import Main.Game;
 import Menu.Component.MenuButton;

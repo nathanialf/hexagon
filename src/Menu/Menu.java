@@ -6,7 +6,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Transform;
-import org.newdawn.slick.gui.TextField;
 
 import Main.Game;
 import Menu.Component.MenuButton;
