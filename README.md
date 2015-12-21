@@ -1,3 +1,1 @@
-#this is a hexamabob
-#it generates hexagons randomly
-#it has issues
+This is a hexagon generator thing that I made that was going to be a game
