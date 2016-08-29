@@ -9,6 +9,7 @@ public class Hexagon
 {
 	//This Hexagon
 	public Polygon hex;
+	public Polygon playerHex;
 	//The adjacent actual hexagons
 	public Hexagon [] adjacent = {null, null, null, null, null, null};
 	//The holder hexagons for comparison to find adjacents
@@ -29,6 +30,7 @@ public class Hexagon
 	public Hexagon (int size, int x, int y, boolean hasAdjacents) throws SlickException
 	{
 		hex = new Polygon();
+		playerHex = new Polygon();
 		this.size = size;
 		this.x = (int) x;
 		this.y = (int) y;
@@ -77,7 +79,7 @@ public class Hexagon
 			{
 				for (Hexagon i : adjacentChecker)
 				{
-					//runs through the adjacentcheckers of all hexagons that isn't this one.
+					//runs through the adjacentCheckers of all hexagons that isn't this one.
 					if (h.size == i.size && h.x == i.x && i.y == h.y)
 					{
 						//occupies the adjacent if there is a hexagon adjacent
@@ -99,21 +101,14 @@ public class Hexagon
 			//if it is a base hexagon
 			if (hasAdjacents)
 			{
-				//if it is where the player is at
-				if (selected)
-				{
-					//draws the player
-					new Image("res/Test Images/0_1_transparent.png").draw(x + hex.getX() - (size + 9), y + hex.getY() - (size +8));
-				}
-				
 				//linewidth for the outer rim of base hexagons
-				g.setLineWidth(1);
+				g.setLineWidth(2);
 				//color for the center of the hexagon
-				g.setColor(new Color(255,255,255,60));
+				g.setColor(new Color(Game.green, Game.blue, Game.red,100));
 				//fills in the center of the hexagon
 				g.fill(hex);
 				//sets the color of the outer rim of the hexagon
-				g.setColor(Color.white);
+				g.setColor(new Color(Game.green, Game.blue, Game.red));
 				//draws the outer rim
 				g.draw(hex);
 				
@@ -121,9 +116,9 @@ public class Hexagon
 			else
 			{
 				//bigger linewidth for the current accessible hexagons for visualization to the player
-				g.setLineWidth(5);
+				g.setLineWidth(6);
 				//makes it blue to stand out
-				g.setColor(new Color(0,0,255, 200));
+				g.setColor(new Color(Game.green, Game.blue, Game.red, 200));
 				//draws the highlight for the accessible hexagons
 				g.draw(hex);
 			}

@@ -9,8 +9,10 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.openal.AL;
 import org.newdawn.slick.*;
+import org.newdawn.slick.geom.Polygon;
 
 import Cell.Hexagon;
+import Main.Game;
 import Menu.MainMenu;
 import Menu.Menu;
 import Menu.Component.MenuButton;
@@ -41,8 +43,8 @@ public class Game extends BasicGame
 	boolean clicked = false;
 	
 	//sets fullscreen
-	public static int w = 800,h = 600;
-	public static boolean fullScreen = true;
+	public static int w = 1280,h = 720;
+	public static boolean fullScreen = false;
 	//holds beginning time for logging
 	static double startTime;
 	//holds the ending time for statistics
@@ -50,6 +52,9 @@ public class Game extends BasicGame
 	//holds how much memory is in use
 	public static double memUse;
 	public static double cpuUse;
+	
+	//rgb values
+	public static int red, green, blue, colorState;
 
 	//holds important data
 	public static Integer Xs[]= {0,0,0,0,0,0};
@@ -63,6 +68,8 @@ public class Game extends BasicGame
 	
 	//for when the game glitches
 	Hexagon last;
+	
+	public static Polygon playerHex;
 	
 	//if the game is paused this will be the menu displayed
 	public static Menu currentMenu;
@@ -96,6 +103,9 @@ public class Game extends BasicGame
 		}
 		}
 		
+		g.setColor(new Color(red, green, blue));
+		g.fillRect(0, 0, app.getWidth(), app.getHeight());
+		
 		//if the hexagon is selected it draws the border of the adjacent checkers that are occupied
 		for (int a = 0; a < hexes.size(); a++)
 		{
@@ -109,6 +119,11 @@ public class Game extends BasicGame
 				break;
 			}
 		}
+
+		//draws the player
+		g.setColor(new Color(Game.blue, Game.red, Game.green, 100));
+		g.setLineWidth(5);
+		g.draw(playerHex);
 		
 		//draws all the hexagons
 		for (int a = 0; a < hexes.size(); a++)
@@ -151,20 +166,20 @@ public class Game extends BasicGame
 	}
 	public void init(GameContainer gc) throws SlickException
 	{
+		//MULTIPLES OF 8
+		hexSize = 3;
+		hexSize *= 8;
+		
 		AL.destroy();
 		sound = new Sound("res/Sounds/Arpology2.wav");
 		//sets how it is displayed in width height and if its full screen
 		if (fullScreen)
 			app.setDisplayMode(app.getScreenWidth(), app.getScreenHeight(), fullScreen);
 		else
-			app.setDisplayMode(Integer.parseInt(currentMenu.menubuttons.get(2).elements.get(2).textfields.get(0).getText()), Integer.parseInt(currentMenu.menubuttons.get(2).elements.get(2).textfields.get(1).getText()), fullScreen);
+			app.setDisplayMode(/*Integer.parseInt(currentMenu.menubuttons.get(2).elements.get(2).textfields.get(0).getText())*/Game.w, /*Integer.parseInt(currentMenu.menubuttons.get(2).elements.get(2).textfields.get(1).getText())*/Game.h, fullScreen);
 		
 		if (hexes.size() < size)
 		{
-			//MULTIPLES OF 8
-			hexSize = 3;
-			hexSize *= 8;
-
 			//sets up a base hexagon where the player starts
 			Game.hexes.add(new Hexagon(hexSize, (Game.app.getWidth() / 2), (Game.app.getHeight() / 2), true));
 			hexes.get(0).selected = true;
@@ -205,6 +220,15 @@ public class Game extends BasicGame
 		Keys[3] = Input.KEY_D; 
 		Keys[4] = Input.KEY_S;
 		Keys[5] = Input.KEY_A;
+
+		
+		playerHex = new Polygon();
+		//sets points for the hexagons
+		for(int a = 0; a < 6; a++)
+		{
+			playerHex.addPoint((int) ((app.getWidth() /2) + (hexSize *.66) * Math.cos(a * 2 * Math.PI / 6)), 
+					(int) ((app.getHeight() / 2) + (hexSize*.66) * Math.sin(a * 2 * Math.PI / 6)));
+		}
 	}
 
 	public void update(GameContainer gc, int delta) throws SlickException
@@ -348,23 +372,34 @@ public class Game extends BasicGame
 			else if (clicked)
 				clicked = false;
 		}
+		
+		CycleColors();
 	}
     
 	public static void main (String args[]) throws SlickException
 	{
 		
+		//Red
+		red = 255;
+		//Blue
+		blue = 0;
+		//Green
+		green = 0;
+		//Color State
+		colorState = 0;
 		//how many hexagons are going to be generated
-		size = 500;
+		size = 1000;
 		//sets up start time for logging
 		startTime = System.currentTimeMillis();
 		//sets the container to hold the game
 		app = new AppGameContainer(new Game());
 		//sets if you want to see the fps (i did not like the position so i recreated it in render so it would
-		//be in a new location
+		//be in a new location)
 		app.setShowFPS(false);
 		//keeps delta stable
 		app.setMaximumLogicUpdateInterval(0);
 		app.setMinimumLogicUpdateInterval(0);
+		
 		//starts the game
 		app.start();
 	}
@@ -432,6 +467,40 @@ public class Game extends BasicGame
 			}
 			//rechecks to see if which ones are now visible
 			h.checkCanDraw();
+		}
+	}
+	
+	public static void CycleColors()
+	{
+		if(colorState == 0){
+		    green++;
+		    if(green == 255)
+		    	colorState = 1;
+		}
+		if(colorState == 1){
+		    red--;
+		    if(red == 0)
+		    	colorState = 2;
+		}
+		if(colorState == 2){
+		    blue++;
+		    if(blue == 255)
+		    	colorState = 3;
+		}
+		if(colorState == 3){
+		    green--;
+		    if(green == 0)
+		    	colorState = 4;
+		}
+		if(colorState == 4){
+		    red++;
+		    if(red == 255)
+		    	colorState = 5;
+		}
+		if(colorState == 5){
+		    blue--;
+		    if(blue == 0)
+		    	colorState = 0;
 		}
 	}
 }
