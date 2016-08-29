@@ -3,11 +3,15 @@ package Main;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Polygon;
 
@@ -45,6 +49,8 @@ public class Game extends BasicGame
 	//sets fullscreen
 	public static int w = 1280,h = 720;
 	public static boolean fullScreen = true;
+	//show the FPS counter
+	public static boolean showFPS = false;
 	//holds beginning time for logging
 	static double startTime;
 	//holds the ending time for statistics
@@ -84,24 +90,6 @@ public class Game extends BasicGame
 	{	
 		//Anti-aliasing
 		g.setAntiAlias(alias);
-		
-		//val is for switch cases
-		int val;
-		//for background alignment
-		val = (app.getWidth() / 16) * 9 < app.getHeight()? 1:0;
-		switch (val)
-		{
-		case 1:
-		{
-			new Image("res/Test Images/OuterSpace.jpg").draw(0,0,(app.getHeight() * 16) / 9, app.getHeight());
-			break;
-		}
-		case 0:
-		{
-			new Image("res/Test Images/OuterSpace.jpg").draw(0,0,app.getWidth(), (app.getWidth() / 16) * 9);
-			break;
-		}
-		}
 		
 		g.setColor(new Color(red, green, blue));
 		g.fillRect(0, 0, app.getWidth(), app.getHeight());
@@ -164,7 +152,8 @@ public class Game extends BasicGame
 		//sets the color of the following text to be white
 		g.setColor(Color.white);
 		//draws the fps in a new location to not interfere with the generating loading bar.
-		g.drawString("" + app.getFPS(), 16, app.getHeight() - 32);
+		if(showFPS)
+			g.drawString("" + app.getFPS(), 16, app.getHeight() - 32);
 	}
 	public void init(GameContainer gc) throws SlickException
 	{
@@ -240,6 +229,11 @@ public class Game extends BasicGame
 		{
 			AL.destroy();
 			System.exit(0);
+		}
+		
+		if (gc.getInput().isKeyPressed(Input.KEY_F1))
+		{
+			showFPS = !showFPS;
 		}
 		
 		////////////////////////////////////////////////////////
@@ -390,7 +384,7 @@ public class Game extends BasicGame
 		//Color State
 		colorState = 0;
 		//how many hexagons are going to be generated
-		size = 1000;
+		size = 500;
 		//sets up start time for logging
 		startTime = System.currentTimeMillis();
 		//sets the container to hold the game
@@ -408,38 +402,32 @@ public class Game extends BasicGame
 
 	public static void takeScreenShot(GameContainer gc, Graphics g)
 	{
-		//creates a blank image the size of the screen
-		BufferedImage screen = new BufferedImage(app.getWidth(), app.getHeight(), BufferedImage.TYPE_INT_RGB);
-		for (int x = 0; x < app.getWidth(); x++)
+		GL11.glReadBuffer(GL11.GL_FRONT);
+		int width = Display.getDisplayMode().getWidth();
+		int height= Display.getDisplayMode().getHeight();
+		int bpp = 4; // Assuming a 32-bit display with a byte each for red, green, blue, and alpha.
+		ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
+		GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer );
+		
+		File file = new File("res/ScreenShots/screen_" + System.currentTimeMillis() + ".png"); // The file to save to.
+		String format = "PNG"; // Example: "PNG" or "JPG"
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		   
+		for(int x = 0; x < width; x++) 
 		{
-			for (int y = 0; y < app.getHeight(); y++)
-			{
-				//gets the color from each pixel
-				Color col = new Color(g.getPixel(x, y));
-				//sets the color to java.awt.color because slick is limited for screenshots
-				java.awt.Color c = new java.awt.Color(col.r, col.g, col.b);
-				//sets the pixel in the same location to the color of the pixel on the screen
-				screen.setRGB(x, y, c.getRGB());
-			}
+		    for(int y = 0; y < height; y++)
+		    {
+		        int i = (x + (width * y)) * bpp;
+		        int red = buffer.get(i) & 0xFF;
+		        int green = buffer.get(i + 1) & 0xFF;
+		        int blue = buffer.get(i + 2) & 0xFF;
+		        image.setRGB(x, height - (y + 1), (0xFF << 24) | (red << 16) | (green << 8) | blue);
+		    }
 		}
-		//sets the name of the image to be screen_currentTime
-		String name = "screen_" + System.currentTimeMillis();
-		//accesses the file
-		File fi = new File("res/ScreenShots/" + name + ".png");
+		   
 		try {
-			//gets the parent directory and creates it if it doesn't exist
-			if (!fi.getParentFile().exists())
-				fi.getParentFile().mkdir();
-			//creates the file because it should not exist
-			if (!fi.exists())
-				fi.createNewFile();
-			//allows writable to the file
-			fi.canWrite();
-			//sets the file to be screen
-			ImageIO.write(screen, "png", fi);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		    ImageIO.write(image, format, file);
+		} catch (IOException e) { e.printStackTrace(); }
 	}
 	
 	public static void adjust(int centerX, int centerY)
