@@ -104,23 +104,25 @@ public class Hexagon
 				//linewidth for the outer rim of base hexagons
 				g.setLineWidth(2);
 				//color for the center of the hexagon
-				g.setColor(new Color(Game.green, Game.blue, Game.red,100));
+				g.setColor(new Color(0, 0, 0, 100));
 				//fills in the center of the hexagon
 				g.fill(hex);
 				//sets the color of the outer rim of the hexagon
-				g.setColor(new Color(Game.green, Game.blue, Game.red));
+				g.setColor(new Color(Game.red, Game.green, Game.blue));
 				//draws the outer rim
 				g.draw(hex);
 				
 			}
 			else
 			{
+				/*
 				//bigger linewidth for the current accessible hexagons for visualization to the player
 				g.setLineWidth(6);
 				//makes it blue to stand out
 				g.setColor(new Color(Game.green, Game.blue, Game.red, 200));
 				//draws the highlight for the accessible hexagons
 				g.draw(hex);
+				*/
 			}
 		}
 	}

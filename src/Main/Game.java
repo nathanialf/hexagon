@@ -44,7 +44,7 @@ public class Game extends BasicGame
 	
 	//sets fullscreen
 	public static int w = 1280,h = 720;
-	public static boolean fullScreen = false;
+	public static boolean fullScreen = true;
 	//holds beginning time for logging
 	static double startTime;
 	//holds the ending time for statistics
@@ -121,9 +121,11 @@ public class Game extends BasicGame
 		}
 
 		//draws the player
-		g.setColor(new Color(Game.blue, Game.red, Game.green, 100));
-		g.setLineWidth(5);
+		g.setColor(new Color(Game.green, Game.blue, Game.red));
+		g.setLineWidth(2);
 		g.draw(playerHex);
+		g.setColor(new Color(Game.green, Game.blue, Game.red,100));
+		g.fill(playerHex);
 		
 		//draws all the hexagons
 		for (int a = 0; a < hexes.size(); a++)
@@ -373,7 +375,7 @@ public class Game extends BasicGame
 				clicked = false;
 		}
 		
-		CycleColors();
+		CycleColors(delta / 6);
 	}
     
 	public static void main (String args[]) throws SlickException
@@ -470,36 +472,36 @@ public class Game extends BasicGame
 		}
 	}
 	
-	public static void CycleColors()
+	public static void CycleColors(int delta)
 	{
 		if(colorState == 0){
-		    green++;
-		    if(green == 255)
+		    green += delta;
+		    if(green >= 255)
 		    	colorState = 1;
 		}
 		if(colorState == 1){
-		    red--;
-		    if(red == 0)
+		    red -= delta;
+		    if(red <= 100)
 		    	colorState = 2;
 		}
 		if(colorState == 2){
-		    blue++;
-		    if(blue == 255)
+		    blue += delta;
+		    if(blue >= 255)
 		    	colorState = 3;
 		}
 		if(colorState == 3){
-		    green--;
-		    if(green == 0)
+		    green -= delta;
+		    if(green <= 0)
 		    	colorState = 4;
 		}
 		if(colorState == 4){
-		    red++;
-		    if(red == 255)
+		    red += delta;
+		    if(red >= 255)
 		    	colorState = 5;
 		}
 		if(colorState == 5){
-		    blue--;
-		    if(blue == 0)
+		    blue -= delta;
+		    if(blue <= 0)
 		    	colorState = 0;
 		}
 	}
