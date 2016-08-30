@@ -129,14 +129,16 @@ public class Game extends BasicGame
 			//sets the following text to be white
 			g.setColor(Color.white);
 			//loading bar boundaries
-			g.drawRect(32, 32, app.getWidth() - 64, 16);
+			g.drawRect(32, 32, app.getWidth() - 64, 8);
 			//sets how much of the bar will be filled due to how many hexagons are generated over
 			//how many there are total
 			double hSize = hexes.size(), Size = size;
-			g.fillRect(32, 32, (int)((hSize / Size) * (app.getWidth() - 64)), 16);
+			g.fillRect(32, 32, (int)((hSize / Size) * (app.getWidth() - 64)), 8);
 			//generating message
 			String loadingMessage = "GENERATING WITH SCIENCE";
-			g.drawString(loadingMessage, (app.getWidth() / 2) - (loadingMessage.length() * 5), 8);
+			g.drawString(loadingMessage, 32, 8);
+			String hexCount = hexes.size() + " / " + size + " Hexagons";
+			g.drawString(hexCount, 32, 48);
 		}
 		if (paused)
 		{
@@ -156,7 +158,7 @@ public class Game extends BasicGame
 	public void init(GameContainer gc) throws SlickException
 	{
 		//MULTIPLES OF 8
-		hexSize = 3;
+		hexSize = 2;
 		hexSize *= 8;
 		
 		AL.destroy();
@@ -213,12 +215,12 @@ public class Game extends BasicGame
 
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
-		/*//leave the game quickly
+		//leave the game quickly
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 		{
 			AL.destroy();
 			System.exit(0);
-		}*/
+		}
 		
 		if (gc.getInput().isKeyPressed(Input.KEY_F1))
 		{
@@ -290,7 +292,7 @@ public class Game extends BasicGame
 									i.selected = false;
 								}
 								h.adjacent[a].selected = true;
-								System.out.println(hexes.indexOf(h.adjacent[a]));
+								//System.out.println(hexes.indexOf(h.adjacent[a]));
 								//stops when it was found
 								break;
 							}//if it is selected without and its adjacent wasn't there it wont let the player move
@@ -376,7 +378,7 @@ public class Game extends BasicGame
 		//Color State
 		colorState = 0;
 		//how many hexagons are going to be generated
-		size = 1000;
+		size = 1200;
 		//sets up start time for logging
 		startTime = System.currentTimeMillis();
 		//sets the container to hold the game
