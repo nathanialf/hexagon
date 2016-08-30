@@ -16,6 +16,7 @@ public class Hexagon
 	public Hexagon [] adjacentChecker = {null, null, null, null, null, null};
 	//Dimensions
 	public int size;
+	public int innerSize;
 	public int x;
 	public int y;
 	//Checks for the adjacentChecker so it can't pass through if its empty
@@ -32,6 +33,7 @@ public class Hexagon
 		hex = new Polygon();
 		playerHex = new Polygon();
 		this.size = size;
+		this.innerSize = (int)(this.size * .66);
 		this.x = (int) x;
 		this.y = (int) y;
 		
@@ -43,6 +45,8 @@ public class Hexagon
 		{
 			hex.addPoint((int) (x + size * Math.cos(a * 2 * Math.PI / 6)), 
 					(int) (y + size * Math.sin(a * 2 * Math.PI / 6)));
+			playerHex.addPoint((int) (x + innerSize * Math.cos(a * 2 * Math.PI / 6)), 
+					(int) (y + innerSize * Math.sin(a * 2 * Math.PI / 6)));
 		}
 		//Setsup the annoying adjacent Checkers in a very static way
 		if (hasAdjacents)
@@ -79,7 +83,7 @@ public class Hexagon
 			{
 				for (Hexagon i : adjacentChecker)
 				{
-					//runs through the adjacentCheckers of all hexagons that isn't this one.
+					//runs through the adjacentcheckers of all hexagons that isn't this one.
 					if (h.size == i.size && h.x == i.x && i.y == h.y)
 					{
 						//occupies the adjacent if there is a hexagon adjacent
@@ -101,6 +105,7 @@ public class Hexagon
 			//if it is a base hexagon
 			if (hasAdjacents)
 			{
+				
 				//linewidth for the outer rim of base hexagons
 				g.setLineWidth(2);
 				//color for the center of the hexagon
@@ -111,18 +116,23 @@ public class Hexagon
 				g.setColor(new Color(Game.red, Game.green, Game.blue));
 				//draws the outer rim
 				g.draw(hex);
-				
+
+				//if it is where the player is at
+				if (selected)
+				{
+					//sets the color of the inner ring of the hexagon
+					g.setColor(new Color(Game.red, Game.green, Game.blue, 150));
+					g.fill(playerHex);
+				}
 			}
 			else
-			{
-				/*
+			{/*
 				//bigger linewidth for the current accessible hexagons for visualization to the player
-				g.setLineWidth(6);
+				g.setLineWidth(5);
 				//makes it blue to stand out
-				g.setColor(new Color(Game.green, Game.blue, Game.red, 200));
+				g.setColor(new Color(0,0,255, 200));
 				//draws the highlight for the accessible hexagons
-				g.draw(hex);
-				*/
+				g.fill(playerHex);*/
 			}
 		}
 	}

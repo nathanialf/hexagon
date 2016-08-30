@@ -47,7 +47,7 @@ public class Game extends BasicGame
 	boolean clicked = false;
 	
 	//sets fullscreen
-	public static int w = 1280,h = 720;
+	public static int w = 2560,h = 1440;
 	public static boolean fullScreen = true;
 	//show the FPS counter
 	public static boolean showFPS = false;
@@ -70,12 +70,10 @@ public class Game extends BasicGame
 	//Background Sound
 	Sound sound;
 	//If it will be muted
-	public static boolean muted = true;
+	public static boolean muted = false;
 	
 	//for when the game glitches
 	Hexagon last;
-	
-	public static Polygon playerHex;
 	
 	//if the game is paused this will be the menu displayed
 	public static Menu currentMenu;
@@ -111,9 +109,9 @@ public class Game extends BasicGame
 		//draws the player
 		g.setColor(new Color(Game.green, Game.blue, Game.red));
 		g.setLineWidth(2);
-		g.draw(playerHex);
+		//g.draw(playerHex);
 		g.setColor(new Color(Game.green, Game.blue, Game.red,100));
-		g.fill(playerHex);
+		//g.fill(playerHex);
 		
 		//draws all the hexagons
 		for (int a = 0; a < hexes.size(); a++)
@@ -211,25 +209,16 @@ public class Game extends BasicGame
 		Keys[3] = Input.KEY_D; 
 		Keys[4] = Input.KEY_S;
 		Keys[5] = Input.KEY_A;
-
-		
-		playerHex = new Polygon();
-		//sets points for the hexagons
-		for(int a = 0; a < 6; a++)
-		{
-			playerHex.addPoint((int) ((app.getWidth() /2) + (hexSize *.66) * Math.cos(a * 2 * Math.PI / 6)), 
-					(int) ((app.getHeight() / 2) + (hexSize*.66) * Math.sin(a * 2 * Math.PI / 6)));
-		}
 	}
 
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
-		//leave the game quickly
+		/*//leave the game quickly
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 		{
 			AL.destroy();
 			System.exit(0);
-		}
+		}*/
 		
 		if (gc.getInput().isKeyPressed(Input.KEY_F1))
 		{
@@ -301,6 +290,7 @@ public class Game extends BasicGame
 									i.selected = false;
 								}
 								h.adjacent[a].selected = true;
+								System.out.println(hexes.indexOf(h.adjacent[a]));
 								//stops when it was found
 								break;
 							}//if it is selected without and its adjacent wasn't there it wont let the player move
@@ -314,6 +304,8 @@ public class Game extends BasicGame
 								//moves the hexagons
 								h.hex.setX(h.hex.getX() - Xs[a]);
 								h.hex.setY(h.hex.getY() - Ys[a]);
+								h.playerHex.setX(h.playerHex.getX() - Xs[a]);
+								h.playerHex.setY(h.playerHex.getY() - Ys[a]);
 								for (Hexagon i : h.adjacentChecker)
 								{
 									//moves the hexagons adjacent checkers
@@ -384,7 +376,7 @@ public class Game extends BasicGame
 		//Color State
 		colorState = 0;
 		//how many hexagons are going to be generated
-		size = 500;
+		size = 1000;
 		//sets up start time for logging
 		startTime = System.currentTimeMillis();
 		//sets the container to hold the game
@@ -469,7 +461,7 @@ public class Game extends BasicGame
 		}
 		if(colorState == 1){
 		    red -= delta;
-		    if(red <= 100)
+		    if(red <= 150)
 		    	colorState = 2;
 		}
 		if(colorState == 2){
