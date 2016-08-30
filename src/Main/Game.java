@@ -15,6 +15,14 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Polygon;
 
+import State.ControlsState;
+import State.InformationState;
+import State.MapState;
+import State.PauseState;
+import State.PlayState;
+import State.SettingsState;
+import State.State;
+
 import Cell.Hexagon;
 import Main.Game;
 import Menu.MainMenu;
@@ -77,6 +85,21 @@ public class Game extends BasicGame
 	
 	//if the game is paused this will be the menu displayed
 	public static Menu currentMenu;
+	
+
+	
+	//GAME STATE
+	//Will define what needs to happen when in each state to
+	//improve performance over previous games
+	/*
+	private static State current_state = new State();
+	private static PlayState PLAY_STATE = new PlayState();
+	private static PauseState PAUSE_STATE = new PauseState();
+	private static SettingsState SETTINGS_STATE = new SettingsState();
+	private static ControlsState CONTROLS_STATE = new ControlsState();
+	private static MapState MAP_STATE = new MapState();
+	private static InformationState INFORMATION_STATE = new InformationState();
+	*/
 	
 	public Game() 
 	{
@@ -158,7 +181,7 @@ public class Game extends BasicGame
 	public void init(GameContainer gc) throws SlickException
 	{
 		//MULTIPLES OF 8
-		hexSize = 2;
+		hexSize = 12;
 		hexSize *= 8;
 		
 		AL.destroy();
@@ -378,7 +401,7 @@ public class Game extends BasicGame
 		//Color State
 		colorState = 0;
 		//how many hexagons are going to be generated
-		size = 1200;
+		size = 1000;
 		//sets up start time for logging
 		startTime = System.currentTimeMillis();
 		//sets the container to hold the game
