@@ -1,27 +1,27 @@
 package State;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
 
-import com.game.main.Display;
-import com.game.menu.*;
-import com.game.menu.buttons.*;
-import com.game.menu.checkboxes.*;
-import com.game.menu.sliders.*;
+import Main.*;
+import NewMenu.*;
+import NewMenu.Buttons.*;
+import NewMenu.Checkboxes.*;
+import NewMenu.Sliders.*;
 
 public class ControlsState extends State
 {
-    int base_y = Display.HEIGHT / 6;
-    MenuButton buttons [] = {new BackButton(Display.WIDTH / 3, base_y)};
+    int base_y = Game.app.getHeight() / 6;
+    MenuButton buttons [] = {new BackButton(Game.app.getWidth() / 3, base_y)};
     MenuSlider sliders [] = {};
     MenuCheckbox checkboxes [] =  {};
     
 	public ControlsState()
 	{
 		setName("CONTROLS");
-		background.setRect(Display.WIDTH / 3, -Display.HEIGHT, Display.WIDTH, Display.HEIGHT); 
-		BASE_HEIGHT = Display.HEIGHT;
+		background = new Rectangle(Game.app.getWidth() / 3, -Game.app.getHeight(), Game.app.getWidth(), Game.app.getHeight()); 
+		BASE_HEIGHT = Game.app.getHeight();
 	}
 	public void update(double delta)
 	{
@@ -31,7 +31,7 @@ public class ControlsState extends State
 		{
 			if(background.getY() < 0)
 			{
-				background.setRect(background.getX(), background.getY() + (background.getHeight() / 15), background.getWidth(), background.getHeight());
+				background = new Rectangle(background.getX(), background.getY() + (background.getHeight() / 15), background.getWidth(), background.getHeight());
 
 				for(int a = 0; a < buttons.length; a++)
 					buttons[a].buildBody();
@@ -42,7 +42,7 @@ public class ControlsState extends State
 			}
 			else
 			{
-				background.setRect(background.getX(), 0, background.getWidth(), background.getHeight());
+				background = new Rectangle(background.getX(), 0, background.getWidth(), background.getHeight());
 				is_open_animating = false;
 			}
 		}
@@ -55,9 +55,9 @@ public class ControlsState extends State
 			checkboxes[a].update(delta);
 	}
 	
-	public void render(Graphics2D g)
+	public void render(Graphics g)
 	{
-		g.setFont(Display.BIG_FONT);
+		g.setFont(Game.BIG_FONT);
 		
 		g.setColor(new Color(239,239,239));
 		g.fill(background);
@@ -72,7 +72,7 @@ public class ControlsState extends State
 			checkboxes[a].render(g);
 	}
 	
-	public void setBackground(Rectangle2D.Double r)	
+	public void setBackground(Rectangle r)	
 	{
 		background = r;
 		

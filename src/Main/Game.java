@@ -16,7 +16,6 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Polygon;
 
 import State.ControlsState;
-import State.InformationState;
 import State.MapState;
 import State.PauseState;
 import State.PlayState;

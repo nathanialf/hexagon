@@ -1,44 +1,44 @@
 package State;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
 
-import com.game.main.Display;
-import com.game.menu.*;
-import com.game.menu.buttons.*;
+import Main.*;
+import NewMenu.*;
+import NewMenu.Buttons.*;
 
 public class PauseState extends State
 {
-    int base_y = Display.HEIGHT / 6;
+    int base_y = Game.app.getHeight() / 6;
     public MenuButton buttons [] = {new ResumeButton(0, base_y), 
-    		new MapButton(0, base_y + (Display.HEIGHT / 16) + 16), 
-    		new SettingsButton(0, base_y + (((Display.HEIGHT / 16) + 16) * 2)),
-    		new ControlsButton(0, base_y + (((Display.HEIGHT / 16) + 16) * 3)),
-    		new ExitButton(0, base_y + (((Display.HEIGHT / 16) + 16) * 4))};
+    		new MapButton(0, base_y + (Game.app.getHeight() / 16) + 16), 
+    		new SettingsButton(0, base_y + (((Game.app.getHeight() / 16) + 16) * 2)),
+    		new ControlsButton(0, base_y + (((Game.app.getHeight() / 16) + 16) * 3)),
+    		new ExitButton(0, base_y + (((Game.app.getHeight() / 16) + 16) * 4))};
     
 	public PauseState()
 	{
 		setName("PAUSE");
-		background.setRect(0, -Display.HEIGHT, Display.WIDTH, Display.HEIGHT); 
-		BASE_HEIGHT = Display.HEIGHT;
+		background = new Rectangle(0, -Game.app.getHeight(), Game.app.getWidth(), Game.app.getHeight()); 
+		BASE_HEIGHT = Game.app.getHeight();
 	}
 	public void update(double delta)
 	{
-		Display.getMouse().update();
+		//Display.getMouse().update();
 		
 		if(is_open_animating)
 		{	
 			if(background.getY() < 0)
 			{
-				background.setRect(background.getX(), background.getY() + (background.getHeight() / 15), background.getWidth(), background.getHeight());
+				background = new Rectangle(background.getX(), background.getY() + (background.getHeight() / 15), background.getWidth(), background.getHeight());
 				
 				for(int a = 0; a < buttons.length; a++)
 					buttons[a].buildBody();
 			}
 			else
 			{
-				background.setRect(0, 0, background.getWidth(), background.getHeight());
+				background = new Rectangle(0, 0, background.getWidth(), background.getHeight());
 				is_open_animating = false;
 			}
 		}
@@ -48,9 +48,9 @@ public class PauseState extends State
 			buttons[a].update(delta);
 		}
 		
-		Display.getPlayState().setSubState(new State());
+		Game.getPlayState().setSubState(new State());
 		
-		if(Display.getState() != this)
+		if(Game.getState() != this)
 		{
 			setSubState(new State());
 		}
@@ -59,7 +59,7 @@ public class PauseState extends State
 			getSubState().update(delta);
 	}
 	
-	public void render(Graphics2D g)
+	public void render(Graphics g)
 	{
 		g.setColor(new Color(239,239,239));
 		g.fill(background);
@@ -71,7 +71,7 @@ public class PauseState extends State
 			getSubState().render(g);
 	}
 	
-	public void setBackground(Rectangle2D.Double r)	
+	public void setBackground(Rectangle r)	
 	{
 		background = r;
 		
