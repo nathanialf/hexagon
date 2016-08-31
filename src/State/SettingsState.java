@@ -16,7 +16,7 @@ public class SettingsState extends State
     int base_y = Game.app.getHeight() / 6;
     MenuButton buttons [] = {new BackButton(Game.app.getWidth() / 3, base_y)};
     MenuSlider sliders [] = {new MasterVolumeSlider(Game.app.getWidth() / 3, base_y + (Game.app.getHeight() / 16) + 16)};
-    MenuCheckbox checkboxes [] =  {new FullscreenCheckbox(0, base_y + (((Game.app.getHeight() / 16) + 16) * 3))};
+    MenuCheckbox checkboxes [] =  {new FullscreenCheckbox(0, base_y + (((Game.app.getHeight() / 16) + 16) * 3)), new AntialiasCheckbox(0, base_y + (((Game.app.getHeight() / 16) + 16) * 4))};
 	public SettingsState()
 	{
 		setName("SETTINGS");

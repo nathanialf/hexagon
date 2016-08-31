@@ -58,7 +58,7 @@ public class ControlsState extends State
 	
 	public void render(Graphics g)
 	{
-		g.setFont(Game.BIG_FONT);
+		//g.setFont(Game.BIG_FONT);
 		
 		g.setColor(new Color(239,239,239));
 		g.fill(background);

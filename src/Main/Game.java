@@ -115,71 +115,15 @@ public class Game extends BasicGame
 		//Anti-aliasing
 		g.setAntiAlias(alias);
 		
-		/*g.setColor(new Color(red, green, blue));
-		g.fillRect(0, 0, app.getWidth(), app.getHeight());
-		
-		//if the hexagon is selected it draws the border of the adjacent checkers that are occupied
-		for (int a = 0; a < hexes.size(); a++)
-		{
-			if (hexes.get(a).selected)
-			{
-				for (int b = 0; b < hexes.get(a).adjacent.length; b++)
-				{
-					if (hexes.get(a).adjacent[b] != null)
-						hexes.get(a).adjacentChecker[b].draw(g);
-				}
-				break;
-			}
-		}
-
-		//draws the player
-		g.setColor(new Color(Game.green, Game.blue, Game.red));
-		g.setLineWidth(2);
-		//g.draw(playerHex);
-		g.setColor(new Color(Game.green, Game.blue, Game.red,100));
-		//g.fill(playerHex);
-		
-		//draws all the hexagons
-		for (int a = 0; a < hexes.size(); a++)
-		{
-			hexes.get(a).draw(g);
-		}
-		
-		if (hexes.size() < size)
-		{
-			//if it is not done loading
-			//adds a gray layer to dim the generation in the background
-			g.setColor(new Color(0,0,0,150));
-			g.fillRect(0, 0, app.getWidth(), app.getHeight());
-			
-			//sets the following text to be white
-			g.setColor(Color.white);
-			//loading bar boundaries
-			g.drawRect(32, 32, app.getWidth() - 64, 8);
-			//sets how much of the bar will be filled due to how many hexagons are generated over
-			//how many there are total
-			double hSize = hexes.size(), Size = size;
-			g.fillRect(32, 32, (int)((hSize / Size) * (app.getWidth() - 64)), 8);
-			//generating message
-			String loadingMessage = "GENERATING WITH SCIENCE";
-			g.drawString(loadingMessage, 32, 8);
-			String hexCount = hexes.size() + " / " + size + " Hexagons";
-			g.drawString(hexCount, 32, 48);
-		}*/
+		/*
 		if (paused)
 		{
 			//adds a gray layer to dim the generation in the background
-			g.setColor(new Color(0,0,0,150));
+			g.setColor(new Color(0,0,0,175));
 			g.fillRect(0, 0, app.getWidth(), app.getHeight());
 			//currentMenu.draw(g);
 		}
-		
-
-		/*//sets the color of the following text to be white
-		g.setColor(Color.white);
-		//draws the fps in a new location to not interfere with the generating loading bar.
-		if(showFPS)
-			g.drawString("" + app.getFPS(), 16, app.getHeight() - 32);*/
+		*/
 		
 		current_state.render(g);
 	}
