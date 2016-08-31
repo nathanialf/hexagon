@@ -79,7 +79,7 @@ public class Game extends BasicGame
 	//If it will be muted
 	public static boolean muted = false;
 	//Volume
-	public static int volume;
+	public static int volume = 50;
 	
 	//for when the game glitches
 	public static Hexagon last;
@@ -189,16 +189,6 @@ public class Game extends BasicGame
 		hexSize = 1;
 		hexSize *= 8;
 		
-
-		current_state = new State();
-		PLAY_STATE = new PlayState();
-		//PAUSE_STATE = new PauseState();
-		SETTINGS_STATE = new SettingsState();
-		CONTROLS_STATE = new ControlsState();
-		MAP_STATE = new MapState();
-
-		current_state = getPlayState();
-		
 		AL.destroy();
 		sound = new Sound("res/Sounds/Arpology2.wav");
 		//sets how it is displayed in width height and if its full screen
@@ -249,6 +239,15 @@ public class Game extends BasicGame
 		Keys[3] = Input.KEY_D; 
 		Keys[4] = Input.KEY_S;
 		Keys[5] = Input.KEY_A;
+
+		
+		current_state = new State();
+		PLAY_STATE = new PlayState();
+		current_state = getPlayState();
+		PAUSE_STATE = new PauseState();
+		SETTINGS_STATE = new SettingsState();
+		CONTROLS_STATE = new ControlsState();
+		MAP_STATE = new MapState();
 	}
 
 	public void update(GameContainer gc, int delta) throws SlickException
@@ -271,7 +270,7 @@ public class Game extends BasicGame
 		{
 			//while its not done generating it continuously generates
 			reset = new generateHexMap().procedural(re);
-			//tries to garbge collect higher than 120MB in use
+			//tries to garbage collect higher than 120MB in use
 			if (memUse > 120)
 				System.gc();
 		}
@@ -289,114 +288,17 @@ public class Game extends BasicGame
 		
 		//only if its done loading...
 		if (hexes.size() == size)
-		{	
-			if (!paused)
+		{			
+			if(gc.getInput().isKeyPressed(Input.KEY_ENTER) && !getState().is_open_animating && !clicked)
 			{
-				/*
-				//you can take screenshots
-				if (gc.getInput().isKeyPressed(Input.KEY_F2))
+				if(getState() == getPlayState())
 				{
-					takeScreenShot(gc, gc.getGraphics());
-				}
-
-				int c = 0;
-				for (Hexagon h : hexes)
-				{
-					if (!h.selected)
-					{
-						c++;
-					}
-					else
-						break;
-				}
-				if (c == hexes.size())
-					last.selected = true;
-				
-				//keypress
-				for (int a = 0; a < Keys.length; a++)
-				{
-					//if the key is pressed
-					if (gc.getInput().isKeyPressed(Keys[a]))
-					{
-						boolean canDo = true;
-						for (Hexagon h : hexes)
-						{
-							if (h.selected && h.adjacent[a] != null )
-							{
-								last = h;
-								//it finds the selected hexagon and if its adjacent hexagon is there
-								//it sets that one to be the selected hexagon
-								for (Hexagon i : hexes)
-								{
-									i.selected = false;
-								}
-								h.adjacent[a].selected = true;
-								//System.out.println(hexes.indexOf(h.adjacent[a]));
-								//stops when it was found
-								break;
-							}//if it is selected without and its adjacent wasn't there it wont let the player move
-							else if (h.selected && h.adjacent[a] == null)
-								canDo = false;
-						}
-						if (canDo)
-						{
-							for (Hexagon h : hexes)
-							{
-								//moves the hexagons
-								h.hex.setX(h.hex.getX() - Xs[a]);
-								h.hex.setY(h.hex.getY() - Ys[a]);
-								h.playerHex.setX(h.playerHex.getX() - Xs[a]);
-								h.playerHex.setY(h.playerHex.getY() - Ys[a]);
-								for (Hexagon i : h.adjacentChecker)
-								{
-									//moves the hexagons adjacent checkers
-									i.hex.setX(i.hex.getX() - Xs[a]);
-									i.hex.setY(i.hex.getY() - Ys[a]);
-								}
-								//rechecks to see if which ones are now visible
-								h.checkCanDraw();
-							}
-						}
-					}
-				}
-				*/
-			}
-			else
-			{
-				//sets the Memory in Use
-				memUse = ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())/(1024 * 1024));
-				/*
-				currentMenu.update(delta);
-				for (MenuButton m : currentMenu.menubuttons)
-				{
-					if (m.tri.contains(app.getInput().getMouseX(), app.getInput().getMouseY()) && app.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
-					{
-						boolean yes = true;
-						for (MenuElement e : m.elements)
-						{
-							if (e.bounds.contains(app.getInput().getMouseX(), app.getInput().getMouseY()))
-							{
-								e.activate();
-								yes = false;
-								break;
-							}
-						}
-						if (yes)m.activate();
-					}
-				}
-				*/
-			}
-			if (gc.getInput().isKeyDown(Input.KEY_ENTER))
-			{
-				if (paused & !clicked)
-				{
-					paused = false;
+					setState(getPauseState());
 					clicked = true;
 				}
-				else if (!paused && !clicked)
+				else if(getState() == getPauseState())
 				{
-					//currentMenu = new MainMenu();
-					paused = true;
+					setState(getPlayState());
 					clicked = true;
 				}
 			}
@@ -410,7 +312,6 @@ public class Game extends BasicGame
     
 	public static void main (String args[]) throws SlickException
 	{
-		
 		//Red
 		red = 255;
 		//Blue
@@ -420,7 +321,7 @@ public class Game extends BasicGame
 		//Color State
 		colorState = 0;
 		//how many hexagons are going to be generated
-		size = 1000;
+		size = 50;
 		//sets up start time for logging
 		startTime = System.currentTimeMillis();
 		//sets the container to hold the game

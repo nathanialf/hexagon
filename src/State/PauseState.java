@@ -3,6 +3,7 @@ package State;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import Main.*;
@@ -32,7 +33,7 @@ public class PauseState extends State
 		{	
 			if(background.getY() < 0)
 			{
-				background = new Rectangle(background.getX(), background.getY() + (background.getHeight() / 15), background.getWidth(), background.getHeight());
+				background = new Rectangle(background.getX(), background.getY() + (background.getHeight() / 160), background.getWidth(), background.getHeight());
 				
 				for(int a = 0; a < buttons.length; a++)
 					buttons[a].buildBody();
@@ -46,7 +47,7 @@ public class PauseState extends State
 		
 		for(int a = 0; a < buttons.length; a++)
 		{
-			buttons[a].update(delta);
+			buttons[a].update(gc, delta);
 		}
 		
 		Game.getPlayState().setSubState(new State());
@@ -69,7 +70,12 @@ public class PauseState extends State
 			buttons[a].render(g);
 
 		if(getSubState() != null)
-			getSubState().render(g);
+			try {
+				getSubState().render(g);
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 	public void setBackground(Rectangle r)	

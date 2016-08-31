@@ -1,6 +1,7 @@
 package State;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -22,7 +23,7 @@ public class SettingsState extends State
 		background = new Rectangle(Game.app.getWidth() / 3, -Game.app.getHeight(), Game.app.getWidth(), Game.app.getHeight()); 
 		BASE_HEIGHT = Game.app.getHeight();
 	}
-	public void update(double delta)
+	public void update(GameContainer gc, double delta)
 	{
 		//Display.getMouse().update();
 		
@@ -47,16 +48,16 @@ public class SettingsState extends State
 		}
 
 		for(int a = 0; a < buttons.length; a++)
-			buttons[a].update(delta);
+			buttons[a].update(gc, delta);
 		for(int a = 0; a < sliders.length; a++)
-			sliders[a].update(delta);
+			sliders[a].update(gc, delta);
 		for(int a = 0; a < checkboxes.length; a++)
-			checkboxes[a].update(delta);
+			checkboxes[a].update(gc, delta);
 	}
 	
 	public void render(Graphics g)
 	{
-		g.setFont(Game.BIG_FONT);
+		//g.setFont(Game.BIG_FONT);
 		
 		g.setColor(new Color(239,239,239));
 		g.fill(background);

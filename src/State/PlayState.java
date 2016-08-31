@@ -47,7 +47,7 @@ public class PlayState extends State
 			}
 		}
 		
-		//Game.getPauseState().setSubState(new State());
+		Game.getPauseState().setSubState(new State());
 		//Display.getMouse().update();
 		
 		//getWorld().update(delta);
@@ -60,68 +60,70 @@ public class PlayState extends State
 		
 		if(getSubState() != null)
 			getSubState().update(gc, delta);
-		
-		if (gc.getInput().isKeyPressed(Input.KEY_F2))
+		if(Game.hexes.size() == Game.size)
 		{
-			Game.takeScreenShot(gc, gc.getGraphics());
-		}
-
-		int c = 0;
-		for (Hexagon h : Game.hexes)
-		{
-			if (!h.selected)
+			if (gc.getInput().isKeyPressed(Input.KEY_F2))
 			{
-				c++;
+				Game.takeScreenShot(gc, gc.getGraphics());
 			}
-			else
-				break;
-		}
-		if (c == Game.hexes.size())
-			Game.last.selected = true;
-		
-		//keypress
-		for (int a = 0; a < Game.Keys.length; a++)
-		{
-			//if the key is pressed
-			if (gc.getInput().isKeyPressed(Game.Keys[a]))
+
+			int c = 0;
+			for (Hexagon h : Game.hexes)
 			{
-				boolean canDo = true;
-				for (Hexagon h : Game.hexes)
+				if (!h.selected)
 				{
-					if (h.selected && h.adjacent[a] != null )
-					{
-						Game.last = h;
-						//it finds the selected hexagon and if its adjacent hexagon is there
-						//it sets that one to be the selected hexagon
-						for (Hexagon i : Game.hexes)
-						{
-							i.selected = false;
-						}
-						h.adjacent[a].selected = true;
-						//System.out.println(hexes.indexOf(h.adjacent[a]));
-						//stops when it was found
-						break;
-					}//if it is selected without and its adjacent wasn't there it wont let the player move
-					else if (h.selected && h.adjacent[a] == null)
-						canDo = false;
+					c++;
 				}
-				if (canDo)
+				else
+					break;
+			}
+			if (c == Game.hexes.size())
+				Game.last.selected = true;
+		
+			//keypress
+			for (int a = 0; a < Game.Keys.length; a++)
+			{
+				//if the key is pressed
+				if (gc.getInput().isKeyPressed(Game.Keys[a]))
 				{
+					boolean canDo = true;
 					for (Hexagon h : Game.hexes)
 					{
-						//moves the hexagons
-						h.hex.setX(h.hex.getX() - Game.Xs[a]);
-						h.hex.setY(h.hex.getY() - Game.Ys[a]);
-						h.playerHex.setX(h.playerHex.getX() - Game.Xs[a]);
-						h.playerHex.setY(h.playerHex.getY() - Game.Ys[a]);
-						for (Hexagon i : h.adjacentChecker)
+						if (h.selected && h.adjacent[a] != null )
 						{
-							//moves the hexagons adjacent checkers
-							i.hex.setX(i.hex.getX() - Game.Xs[a]);
-							i.hex.setY(i.hex.getY() - Game.Ys[a]);
+							Game.last = h;
+							//it finds the selected hexagon and if its adjacent hexagon is there
+							//it sets that one to be the selected hexagon
+							for (Hexagon i : Game.hexes)
+							{
+								i.selected = false;
+							}
+							h.adjacent[a].selected = true;
+							//System.out.println(hexes.indexOf(h.adjacent[a]));
+							//stops when it was found
+							break;
+						}//if it is selected without and its adjacent wasn't there it wont let the player move
+						else if (h.selected && h.adjacent[a] == null)
+							canDo = false;
+					}
+					if (canDo)
+					{
+						for (Hexagon h : Game.hexes)
+						{
+							//moves the hexagons
+							h.hex.setX(h.hex.getX() - Game.Xs[a]);
+							h.hex.setY(h.hex.getY() - Game.Ys[a]);
+							h.playerHex.setX(h.playerHex.getX() - Game.Xs[a]);
+							h.playerHex.setY(h.playerHex.getY() - Game.Ys[a]);
+							for (Hexagon i : h.adjacentChecker)
+							{
+								//moves the hexagons adjacent checkers
+								i.hex.setX(i.hex.getX() - Game.Xs[a]);
+								i.hex.setY(i.hex.getY() - Game.Ys[a]);
+							}
+							//rechecks to see if which ones are now visible
+							h.checkCanDraw();
 						}
-						//rechecks to see if which ones are now visible
-						h.checkCanDraw();
 					}
 				}
 			}
@@ -196,7 +198,7 @@ public class PlayState extends State
 		}
 
 		//sets the color of the following text to be white
-		g.setColor(Color.white);
+		g.setColor(new Color(Game.green, Game.blue, Game.red));
 		//draws the fps in a new location to not interfere with the generating loading bar.
 		if(Game.showFPS)
 			g.drawString("" + Game.app.getFPS(), 16, Game.app.getHeight() - 32);

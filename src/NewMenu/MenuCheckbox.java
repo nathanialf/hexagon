@@ -3,6 +3,7 @@ package NewMenu;
 import javax.swing.JComponent;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -48,7 +49,7 @@ public class MenuCheckbox extends JComponent
 		
 	}
 	
-	public void update(double delta)
+	public void update(GameContainer gc, double delta)
 	{
 		/*
 		if(body.contains(Display.getMouseMotion().getX(), Display.getMouseMotion().getY()))
@@ -91,12 +92,12 @@ public class MenuCheckbox extends JComponent
 	
 	public void render(Graphics g)
 	{
-		g.setFont(Game.MEDIUM_FONT);
+		//g.setFont(Game.MEDIUM_FONT);
 		g.setColor(c);
 		g.fill(body);
 		
 		g.setColor(Color.white);
-		g.drawString(getText(), (int)(body.getX() + (getWidth() * .05)), (int) (body.getY() + (body.getHeight() / 2) + (Game.MEDIUM_FONT.getLineHeight()/2)));
+		g.drawString(getText(), (int)(body.getX() + (getWidth() * .05)), (int) (body.getY() + (body.getHeight() / 2) + (6/2)));
 		
 		g.setColor(new Color(255,255,255,50));
 		g.fillRect((int) (body.getX() + (getWidth() - (getWidth() / 40))), (int) body.getY(), getWidth() / 40, getHeight());

@@ -3,7 +3,9 @@ package NewMenu;
 import javax.swing.JComponent;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 
 import Main.*;
@@ -42,12 +44,12 @@ public class MenuButton extends JComponent
 	{
 	}
 	
-	public void update(double delta)
+	public void update(GameContainer gc, double delta)
 	{
-		/*
-		if(body.contains(Display.getMouseMotion().getX(), Display.getMouseMotion().getY()))
+		
+		if(body.contains(gc.getInput().getMouseX(), gc.getInput().getMouseY()))
 		{
-			if(Display.getMouse().getLeftClicked())
+			if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
 			{
 				setColor(CLICK);
 				doAction();
@@ -61,11 +63,11 @@ public class MenuButton extends JComponent
 		{
 			setColor(MAIN);
 		}
-		*/
+		
 		
 		if(is_color_animating)
 		{
-			animateColor(newColor);
+			animateColor(newColor,delta);
 		}
 		/*
 		if(getSubState() != null)
@@ -74,17 +76,17 @@ public class MenuButton extends JComponent
 	
 	public void render(Graphics g)
 	{
-		g.setFont(Game.MEDIUM_FONT);
+		//g.setFont(Game.MEDIUM_FONT);
 		g.setColor(c);
 		g.fill(body);
 		
 		g.setColor(Color.white);
-		g.drawString(getText(), (int)(getX() + (getWidth() * .05)), (int) (body.getY() + (body.getHeight() / 2) + (Game.MEDIUM_FONT.getLineHeight()/2)));
+		g.drawString(getText(), (int)(getX() + (getWidth() * .05)), (int)(body.getY() + (body.getHeight() / 2) + (6/2)));
 		
 		g.setColor(new Color(255,255,255,50));
 		g.fillRect(getX() + (getWidth() - (getWidth() / 40)), (int) body.getY(), getWidth() / 40, getHeight());
-/*
-		if(getSubState() != null)
+
+		/*if(getSubState() != null)
 			getSubState().render(g);*/
 	}
 	
@@ -145,7 +147,7 @@ public class MenuButton extends JComponent
 		is_color_animating = true;
 	}
 	
-	public void animateColor(Color newColor)
+	public void animateColor(Color newColor, double delta)
 	{
 		Color temp = Color.black;
 		int r = c.getRed(), g = c.getGreen(), b = c.getBlue();
@@ -157,19 +159,19 @@ public class MenuButton extends JComponent
 		}
 
 		if(newColor.getRed() > c.getRed())
-			r+=1;
+			r+= .5 * delta;
 		else if(newColor.getRed() < c.getRed())
-			r-=1;
+			r-= .5 * delta;
 
 		if(newColor.getGreen() > c.getGreen())
-			g+=1;
+			g+= .5 * delta;
 		else if(newColor.getGreen() < c.getGreen())
-			g-=1;
+			g-= .5 * delta;
 
 		if(newColor.getBlue() > c.getBlue())
-			b+=1;
+			b+= .5 * delta;
 		else if(newColor.getBlue() < c.getBlue())
-			b-=1;
+			b-= .5 * delta;
 			
 		temp = new Color(r,g,b);
 		c = temp;

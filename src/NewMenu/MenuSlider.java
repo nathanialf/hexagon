@@ -4,7 +4,9 @@ import javax.swing.JComponent;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 
 import Main.*;
@@ -44,18 +46,18 @@ public class MenuSlider extends JComponent
 		
 	}
 	
-	public void update(double delta)
+	public void update(GameContainer gc, double delta)
 	{
-		/*
-		if(body.contains(Display.getMouseMotion().getX(), Display.getMouseMotion().getY()))
+	
+		if(body.contains(gc.getInput().getMouseX(), gc.getInput().getMouseY()))
 		{
-			if(Display.getMouse().getLeftClicked())
+			if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
 			{
 				//setColor(CLICK);
 
-				if(slide.contains(Display.getMouseMotion().getX(), Display.getMouseMotion().getY()))
+				if(slide.contains(gc.getInput().getMouseX(), gc.getInput().getMouseY()))
 				{
-					setValue((int)((Display.getMouseMotion().getX() - slide.getX()) / slide.getWidth() * 100));
+					setValue((int)((gc.getInput().getMouseX() - slide.getX()) / slide.getWidth() * 100));
 					
 					doAction();
 				}
@@ -74,18 +76,18 @@ public class MenuSlider extends JComponent
 		{
 			animateColor(newColor);
 		}
-		*/
+		
 		buildSlider();
 	}
 	
 	public void render(Graphics g)
 	{
-		g.setFont(Game.SMALL_FONT);
+		//g.setFont(Game.SMALL_FONT);
 		g.setColor(c);
 		g.fill(body);
 		
 		g.setColor(Color.white);
-		g.drawString(getText() + ": " + (int)(((getValue() - getMinimumValue()) / getMaximumValue())* 100) + "%", (int) (getX() + (body.getHeight() / 3)), (int) (body.getY() + (body.getHeight() / 4) + (Game.SMALL_FONT.getLineHeight()/2)));
+		g.drawString(getText() + ": " + (int)(((getValue() - getMinimumValue()) / getMaximumValue())* 100) + "%", (int) (getX() + (body.getHeight() / 3)), (int) (body.getY() + (body.getHeight() / 4) + (6/2)));
 		
 		g.setColor(new Color(255,255,255,50));
 		g.fillRect(getX() + (getWidth() - (getWidth() / 40)), (int) body.getY(), getWidth() / 40, getHeight());

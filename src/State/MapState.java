@@ -51,11 +51,11 @@ public class MapState extends State
 		}
 
 		for(int a = 0; a < buttons.length; a++)
-			buttons[a].update(delta);
+			buttons[a].update(gc, delta);
 		for(int a = 0; a < sliders.length; a++)
-			sliders[a].update(delta);
+			sliders[a].update(gc, delta);
 		for(int a = 0; a < checkboxes.length; a++)
-			checkboxes[a].update(delta);
+			checkboxes[a].update(gc, delta);
 	}
 	
 	public void render(Graphics g)
