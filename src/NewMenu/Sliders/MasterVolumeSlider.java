@@ -25,7 +25,7 @@ public class MasterVolumeSlider extends MenuSlider
 		buildBody();
 		
 		setMinimumValue(0);
-		setValue(Game.volume);
+		setValue(Game.volume * 100);
 		setMaximumValue(100);
 	}
 
@@ -38,6 +38,8 @@ public class MasterVolumeSlider extends MenuSlider
 	
 	public void doAction()
 	{
-		Game.volume = (int) getValue();
+		Game.volume = (float) getValue() / 100;
+		Game.sound.stop();
+		Game.sound.loop(1, Game.volume);
 	}
 }

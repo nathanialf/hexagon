@@ -75,11 +75,11 @@ public class Game extends BasicGame
 	public static Integer Keys[] = {0,0,0,0,0,0};
 	
 	//Background Sound
-	Sound sound;
+	public static Sound sound;
 	//If it will be muted
 	public static boolean muted = false;
 	//Volume
-	public static int volume = 50;
+	public static float volume = 0.01f;
 	
 	//for when the game glitches
 	public static Hexagon last;
@@ -135,6 +135,7 @@ public class Game extends BasicGame
 		
 		AL.destroy();
 		sound = new Sound("res/Sounds/Arpology2.wav");
+		
 		//sets how it is displayed in width height and if its full screen
 		if (fullScreen)
 			app.setDisplayMode(app.getScreenWidth(), app.getScreenHeight(), fullScreen);
@@ -150,7 +151,7 @@ public class Game extends BasicGame
 		
 		if (!muted)
 		{
-			sound.loop();
+			sound.loop(1, volume);
 		}
 		else
 		{
@@ -265,7 +266,7 @@ public class Game extends BasicGame
 		//Color State
 		colorState = 0;
 		//how many hexagons are going to be generated
-		size = 50;
+		size = 1000;
 		//sets up start time for logging
 		startTime = System.currentTimeMillis();
 		//sets the container to hold the game
