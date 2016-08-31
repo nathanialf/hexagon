@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import Cell.Hexagon;
 import Main.*;
 import NewMenu.*;
 import NewMenu.Buttons.*;
@@ -33,7 +34,7 @@ public class PauseState extends State
 		{	
 			if(background.getY() < 0)
 			{
-				background = new Rectangle(background.getX(), background.getY() + (background.getHeight() / 160), background.getWidth(), background.getHeight());
+				background = new Rectangle(background.getX(), (float) (background.getY() + (background.getHeight() / 160) * (.5 * delta)), background.getWidth(), background.getHeight());
 				
 				for(int a = 0; a < buttons.length; a++)
 					buttons[a].buildBody();
@@ -63,6 +64,16 @@ public class PauseState extends State
 	
 	public void render(Graphics g)
 	{
+		g.setColor(new Color(Game.red, Game.green, Game.blue));
+		g.fillRect(0,0,Game.app.getWidth(), Game.app.getHeight());
+		for (Hexagon h : Game.hexes)
+			try {
+				h.draw(g);
+			} catch (SlickException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
 		g.setColor(new Color(239,239,239));
 		g.fill(background);
 		

@@ -30,21 +30,20 @@ public class generateHexMap
 		}
 		else
 		{
-			//sets where to generate from if the last hexagon was boxed in
-			int check = baseHex;
-			for (Hexagon h : Game.hexes)
+			//Searches for the earliest empty hexagon with knowledge of the previous earliest known (Game.checkHex)
+			for (int a = Game.checkHex; a < Game.hexes.size(); a++)
 			{
-				for (Hexagon i : h.adjacent)
+				for (Hexagon i : Game.hexes.get(a).adjacent)
 				{
 					if (i == null)
 					{
 						//finds first hexagon with an empty hole adjacent and sets that as the base
-						baseHex = Game.hexes.indexOf(h);
+						baseHex = Game.hexes.indexOf(Game.hexes.get(a));
 						break;
 					}
 				}
 				//when it finds one it ends the loop
-				if (baseHex != check)
+				if (baseHex != Game.checkHex)
 					break;
 			}
 		}

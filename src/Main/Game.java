@@ -37,9 +37,11 @@ public class Game extends BasicGame
 	//dynamic Array of hexagons
 	public static ArrayList <Hexagon> hexes = new ArrayList <Hexagon>();
 	//how many hexagons to be generated
-	public static long size;
+	public static long size = 2000;
 	//size of the hexagons from the center to a point
 	public static int hexSize;
+	//Randomizer HEx
+	public static int checkHex;
 	
 	//anti-aliasing
 	public static boolean alias = true;
@@ -130,7 +132,7 @@ public class Game extends BasicGame
 	public void init(GameContainer gc) throws SlickException
 	{
 		//MULTIPLES OF 8
-		hexSize = 1;
+		hexSize = 2;
 		hexSize *= 8;
 		
 		AL.destroy();
@@ -265,8 +267,6 @@ public class Game extends BasicGame
 		green = 0;
 		//Color State
 		colorState = 0;
-		//how many hexagons are going to be generated
-		size = 1000;
 		//sets up start time for logging
 		startTime = System.currentTimeMillis();
 		//sets the container to hold the game
