@@ -1,10 +1,11 @@
 package NewMenu.Sliders;
 
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 
-import com.game.main.*;
-import com.game.menu.*;
+import org.newdawn.slick.geom.Rectangle;
+
+import Main.*;
+import NewMenu.*;
 
 public class MasterVolumeSlider extends MenuSlider
 {
@@ -18,25 +19,25 @@ public class MasterVolumeSlider extends MenuSlider
 		setText("MASTER VOLUME");
 		setX(x);
 		setY(y);
-		setWidth(Display.WIDTH / 4);
-		setHeight(Display.HEIGHT / 16);
+		setWidth(Game.app.getWidth() / 4);
+		setHeight(Game.app.getHeight() / 16);
 		
 		buildBody();
 		
 		setMinimumValue(0);
-		setValue(Display.volume);
+		setValue(Game.volume);
 		setMaximumValue(100);
 	}
 
 	
 	public void buildBody()
 	{
-		if(Display.getState() == Display.getPauseState())
-			body = new Rectangle2D.Double(Display.getSettingsState().getBackground().getX(), Display.getSettingsState().getBackground().getY() + getY(), getWidth(), getHeight());
+		if(Game.getState() == Game.getPauseState())
+			body = new Rectangle(Game.getSettingsState().getBackground().getX(), Game.getSettingsState().getBackground().getY() + getY(), getWidth(), getHeight());
 	}
 	
 	public void doAction()
 	{
-		Display.volume = (int) getValue();
+		Game.volume = (int) getValue();
 	}
 }

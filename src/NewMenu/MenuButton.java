@@ -1,12 +1,12 @@
 package NewMenu;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import javax.swing.JComponent;
 
-import com.game.main.Display;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
+
+import Main.*;
 
 public class MenuButton extends JComponent
 {
@@ -23,7 +23,7 @@ public class MenuButton extends JComponent
 	
 	private String text;
 	
-	protected Rectangle2D body;
+	protected Rectangle body;
 	
 	public Color MAIN = new Color(100,175,100);
 	public Color HOVER = new Color(75, 131, 75);
@@ -31,7 +31,7 @@ public class MenuButton extends JComponent
 	Color c = MAIN;
 	
 	boolean is_color_animating = false;
-	Color newColor = Color.BLACK;
+	Color newColor = Color.black;
 	
 	//State sub_state = new State();
 
@@ -44,6 +44,7 @@ public class MenuButton extends JComponent
 	
 	public void update(double delta)
 	{
+		/*
 		if(body.contains(Display.getMouseMotion().getX(), Display.getMouseMotion().getY()))
 		{
 			if(Display.getMouse().getLeftClicked())
@@ -60,6 +61,7 @@ public class MenuButton extends JComponent
 		{
 			setColor(MAIN);
 		}
+		*/
 		
 		if(is_color_animating)
 		{
@@ -70,14 +72,14 @@ public class MenuButton extends JComponent
 			getSubState().update(delta);*/
 	}
 	
-	public void render(Graphics2D g)
+	public void render(Graphics g)
 	{
-		g.setFont(Display.MEDIUM_FONT);
+		g.setFont(Game.MEDIUM_FONT);
 		g.setColor(c);
 		g.fill(body);
 		
 		g.setColor(Color.white);
-		g.drawString(getText(), (int)(getX() + (getWidth() * .05)), (int) (body.getY() + (body.getHeight() / 2) + (Display.MEDIUM_FONT.getSize()/2)));
+		g.drawString(getText(), (int)(getX() + (getWidth() * .05)), (int) (body.getY() + (body.getHeight() / 2) + (Game.MEDIUM_FONT.getLineHeight()/2)));
 		
 		g.setColor(new Color(255,255,255,50));
 		g.fillRect(getX() + (getWidth() - (getWidth() / 40)), (int) body.getY(), getWidth() / 40, getHeight());
@@ -88,7 +90,7 @@ public class MenuButton extends JComponent
 	
 	public void buildBody()
 	{
-		body = new Rectangle2D.Double(Display.getState().getBackground().getX() + getX(), Display.getState().getBackground().getY() + getY(), getWidth(), getHeight());
+		body = new Rectangle(Game.getState().getBackground().getX() + getX(), Game.getState().getBackground().getY() + getY(), getWidth(), getHeight());
 	}
 	
 	public void doAction()
@@ -145,7 +147,7 @@ public class MenuButton extends JComponent
 	
 	public void animateColor(Color newColor)
 	{
-		Color temp = Color.BLACK;
+		Color temp = Color.black;
 		int r = c.getRed(), g = c.getGreen(), b = c.getBlue();
 		
 		if(newColor == c)

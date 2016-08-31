@@ -13,7 +13,7 @@ import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.geom.Rectangle;
 
 import State.ControlsState;
 import State.MapState;
@@ -78,27 +78,31 @@ public class Game extends BasicGame
 	Sound sound;
 	//If it will be muted
 	public static boolean muted = false;
+	//Volume
+	public static int volume;
 	
 	//for when the game glitches
-	Hexagon last;
+	public static Hexagon last;
 	
 	//if the game is paused this will be the menu displayed
-	public static Menu currentMenu;
+	//public static Menu currentMenu;
 	
 
 	
 	//GAME STATE
 	//Will define what needs to happen when in each state to
 	//improve performance over previous games
-	/*
-	private static State current_state = new State();
-	private static PlayState PLAY_STATE = new PlayState();
-	private static PauseState PAUSE_STATE = new PauseState();
-	private static SettingsState SETTINGS_STATE = new SettingsState();
-	private static ControlsState CONTROLS_STATE = new ControlsState();
-	private static MapState MAP_STATE = new MapState();
-	private static InformationState INFORMATION_STATE = new InformationState();
-	*/
+	private static State current_state;
+	private static PlayState PLAY_STATE;
+	private static PauseState PAUSE_STATE;
+	private static SettingsState SETTINGS_STATE;
+	private static ControlsState CONTROLS_STATE;
+	private static MapState MAP_STATE;
+	
+
+	public static Font BIG_FONT;
+	public static Font MEDIUM_FONT;
+	public static Font SMALL_FONT;
 	
 	public Game() 
 	{
@@ -111,7 +115,7 @@ public class Game extends BasicGame
 		//Anti-aliasing
 		g.setAntiAlias(alias);
 		
-		g.setColor(new Color(red, green, blue));
+		/*g.setColor(new Color(red, green, blue));
 		g.fillRect(0, 0, app.getWidth(), app.getHeight());
 		
 		//if the hexagon is selected it draws the border of the adjacent checkers that are occupied
@@ -161,27 +165,39 @@ public class Game extends BasicGame
 			g.drawString(loadingMessage, 32, 8);
 			String hexCount = hexes.size() + " / " + size + " Hexagons";
 			g.drawString(hexCount, 32, 48);
-		}
+		}*/
 		if (paused)
 		{
 			//adds a gray layer to dim the generation in the background
 			g.setColor(new Color(0,0,0,150));
 			g.fillRect(0, 0, app.getWidth(), app.getHeight());
-			currentMenu.draw(g);
+			//currentMenu.draw(g);
 		}
 		
 
-		//sets the color of the following text to be white
+		/*//sets the color of the following text to be white
 		g.setColor(Color.white);
 		//draws the fps in a new location to not interfere with the generating loading bar.
 		if(showFPS)
-			g.drawString("" + app.getFPS(), 16, app.getHeight() - 32);
+			g.drawString("" + app.getFPS(), 16, app.getHeight() - 32);*/
+		
+		current_state.render(g);
 	}
 	public void init(GameContainer gc) throws SlickException
 	{
 		//MULTIPLES OF 8
-		hexSize = 12;
+		hexSize = 1;
 		hexSize *= 8;
+		
+
+		current_state = new State();
+		PLAY_STATE = new PlayState();
+		//PAUSE_STATE = new PauseState();
+		SETTINGS_STATE = new SettingsState();
+		CONTROLS_STATE = new ControlsState();
+		MAP_STATE = new MapState();
+
+		current_state = getPlayState();
 		
 		AL.destroy();
 		sound = new Sound("res/Sounds/Arpology2.wav");
@@ -276,6 +292,7 @@ public class Game extends BasicGame
 		{	
 			if (!paused)
 			{
+				/*
 				//you can take screenshots
 				if (gc.getInput().isKeyPressed(Input.KEY_F2))
 				{
@@ -342,12 +359,13 @@ public class Game extends BasicGame
 						}
 					}
 				}
+				*/
 			}
 			else
 			{
 				//sets the Memory in Use
 				memUse = ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())/(1024 * 1024));
-				
+				/*
 				currentMenu.update(delta);
 				for (MenuButton m : currentMenu.menubuttons)
 				{
@@ -366,6 +384,7 @@ public class Game extends BasicGame
 						if (yes)m.activate();
 					}
 				}
+				*/
 			}
 			if (gc.getInput().isKeyDown(Input.KEY_ENTER))
 			{
@@ -376,7 +395,7 @@ public class Game extends BasicGame
 				}
 				else if (!paused && !clicked)
 				{
-					currentMenu = new MainMenu();
+					//currentMenu = new MainMenu();
 					paused = true;
 					clicked = true;
 				}
@@ -386,6 +405,7 @@ public class Game extends BasicGame
 		}
 		
 		CycleColors(delta / 6);
+		current_state.update(gc, delta);
 	}
     
 	public static void main (String args[]) throws SlickException
@@ -508,5 +528,25 @@ public class Game extends BasicGame
 		    if(blue <= 0)
 		    	colorState = 0;
 		}
+	}
+
+	
+	public static State getState()							{return current_state;}
+	public static PlayState getPlayState()					{return PLAY_STATE;}
+	public static PauseState getPauseState()				{return PAUSE_STATE;}
+	public static SettingsState getSettingsState()			{return SETTINGS_STATE;}
+	public static ControlsState getControlsState()			{return CONTROLS_STATE;}
+	public static MapState getMapState()					{return MAP_STATE;}
+	
+	public static void setState(State s)		
+	{
+		State old = current_state;
+		
+		current_state = s;
+		current_state.openAnim();
+		
+		Rectangle newBody = new Rectangle(0, -current_state.BASE_HEIGHT, app.getWidth(), current_state.BASE_HEIGHT);
+		
+		old.setBackground(newBody);
 	}
 }

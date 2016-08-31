@@ -1,12 +1,13 @@
 package NewMenu;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import javax.swing.JComponent;
 
-import com.game.main.Display;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
+
+import Main.*;
 
 public class MenuSlider extends JComponent
 {
@@ -27,8 +28,8 @@ public class MenuSlider extends JComponent
 	
 	private String text;
 	
-	protected Rectangle2D body;
-	protected Rectangle2D slide = new Rectangle2D.Double(0,0,0,0);
+	protected Rectangle body;
+	protected Rectangle slide = new Rectangle(0,0,0,0);
 	
 	public Color MAIN = new Color(100,175,100);
 	public Color HOVER = new Color(75, 131, 75);
@@ -36,7 +37,7 @@ public class MenuSlider extends JComponent
 	Color c = MAIN;
 	
 	boolean is_color_animating = false;
-	Color newColor = Color.BLACK;
+	Color newColor = Color.black;
 	
 	public MenuSlider()
 	{
@@ -45,6 +46,7 @@ public class MenuSlider extends JComponent
 	
 	public void update(double delta)
 	{
+		/*
 		if(body.contains(Display.getMouseMotion().getX(), Display.getMouseMotion().getY()))
 		{
 			if(Display.getMouse().getLeftClicked())
@@ -72,18 +74,18 @@ public class MenuSlider extends JComponent
 		{
 			animateColor(newColor);
 		}
-		
+		*/
 		buildSlider();
 	}
 	
-	public void render(Graphics2D g)
+	public void render(Graphics g)
 	{
-		g.setFont(Display.SMALL_FONT);
+		g.setFont(Game.SMALL_FONT);
 		g.setColor(c);
 		g.fill(body);
 		
 		g.setColor(Color.white);
-		g.drawString(getText() + ": " + (int)(((getValue() - getMinimumValue()) / getMaximumValue())* 100) + "%", (int) (getX() + (body.getHeight() / 3)), (int) (body.getY() + (body.getHeight() / 4) + (Display.SMALL_FONT.getSize()/2)));
+		g.drawString(getText() + ": " + (int)(((getValue() - getMinimumValue()) / getMaximumValue())* 100) + "%", (int) (getX() + (body.getHeight() / 3)), (int) (body.getY() + (body.getHeight() / 4) + (Game.SMALL_FONT.getLineHeight()/2)));
 		
 		g.setColor(new Color(255,255,255,50));
 		g.fillRect(getX() + (getWidth() - (getWidth() / 40)), (int) body.getY(), getWidth() / 40, getHeight());
@@ -93,7 +95,7 @@ public class MenuSlider extends JComponent
 	
 	public void buildBody()
 	{
-		body = new Rectangle2D.Double(Display.getState().getBackground().getX() + getX(), Display.getState().getBackground().getY() + getY(), getWidth(), getHeight());
+		body = new Rectangle(Game.getState().getBackground().getX() + getX(), Game.getState().getBackground().getY() + getY(), getWidth(), getHeight());
 	}
 	
 	public void buildSlider()
@@ -106,7 +108,7 @@ public class MenuSlider extends JComponent
 		
 		slide = new Rectangle2D.Double(sX, sY, sW, sH);
 		*/
-		slide =  new Rectangle2D.Double((int)(getX() + (getWidth() * .05)), (int) body.getY() + (getHeight() / 2), (int) (getWidth() * .9), getHeight() / 5);
+		slide =  new Rectangle((int)(getX() + (getWidth() * .05)), (int) body.getY() + (getHeight() / 2), (int) (getWidth() * .9), getHeight() / 5);
 	}
 	
 	public void doAction()
@@ -169,7 +171,7 @@ public class MenuSlider extends JComponent
 	
 	public void animateColor(Color newColor)
 	{
-		Color temp = Color.BLACK;
+		Color temp = Color.black;
 		int r = c.getRed(), g = c.getGreen(), b = c.getBlue();
 		
 		if(newColor == c)

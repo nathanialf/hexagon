@@ -1,10 +1,10 @@
 package NewMenu;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
 
-import com.game.main.Display;
+import Main.*;
 
 public class MenuPane 
 {
@@ -13,9 +13,9 @@ public class MenuPane
 	private int WIDTH;
 	private int HEIGHT;
 	
-	protected Rectangle2D body;
+	protected Rectangle body;
 	
-	public Color MAIN = Color.RED;
+	public Color MAIN = Color.red;
 	Color c = MAIN;
 
 	public boolean is_open_animating = false;
@@ -31,17 +31,17 @@ public class MenuPane
 		{	
 			if(body.getY() < 0)
 			{
-				body.setRect(body.getX(), body.getY() + (body.getHeight() / 30), body.getWidth(), body.getHeight());
+				body = new Rectangle(body.getX(), body.getY() + (body.getHeight() / 30), body.getWidth(), body.getHeight());
 			}
 			else
 			{
-				body.setRect(body.getX(), body.getY(), body.getWidth(), body.getHeight());
+				body = new Rectangle(body.getX(), body.getY(), body.getWidth(), body.getHeight());
 				is_open_animating = false;
 			}
 		}
 	}
 	
-	public void render(Graphics2D g)
+	public void render(Graphics g)
 	{
 		g.setColor(c);
 		g.fill(body);
@@ -49,7 +49,7 @@ public class MenuPane
 	
 	public void buildBody()
 	{
-		body = new Rectangle2D.Double(Display.getState().getBackground().getX() + getX(), Display.getState().getBackground().getY() + getY(), getWidth(), getHeight());
+		body = new Rectangle(Game.getState().getBackground().getX() + getX(), Game.getState().getBackground().getY() + getY(), getWidth(), getHeight());
 	}
 
 	
@@ -78,7 +78,7 @@ public class MenuPane
 		this.HEIGHT = h;
 		buildBody();
 	}
-	public void setBody(Rectangle2D.Double r)	{body = r;}
+	public void setBody(Rectangle r)	{body = r;}
 
 	public void openAnim()
 	{

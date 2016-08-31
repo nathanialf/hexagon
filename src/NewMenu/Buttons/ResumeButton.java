@@ -1,7 +1,7 @@
 package NewMenu.Buttons;
 
-import com.game.main.*;
-import com.game.menu.MenuButton;
+import Main.*;
+import NewMenu.MenuButton;
 
 public class ResumeButton extends MenuButton
 {
@@ -15,13 +15,13 @@ public class ResumeButton extends MenuButton
 		setText("RESUME");
 		setX(x);
 		setY(y);
-		setWidth(Display.WIDTH / 4);
-		setHeight(Display.HEIGHT / 16);
+		setWidth(Game.app.getWidth() / 4);
+		setHeight(Game.app.getHeight() / 16);
 		buildBody();
 	}
 	
 	public void doAction()
 	{
-		Display.setState(Display.getPlayState());
+		Game.setState(Game.getPlayState());
 	}
 }

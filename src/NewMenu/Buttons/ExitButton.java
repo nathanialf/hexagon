@@ -2,8 +2,8 @@ package NewMenu.Buttons;
 
 import java.io.IOException;
 
-import com.game.main.*;
-import com.game.menu.MenuButton;
+import Main.*;
+import NewMenu.*;
 
 public class ExitButton extends MenuButton
 {
@@ -17,18 +17,18 @@ public class ExitButton extends MenuButton
 		setText("EXIT");
 		setX(x);
 		setY(y);
-		setWidth(Display.WIDTH / 4);
-		setHeight(Display.HEIGHT / 16);
+		setWidth(Game.app.getWidth() / 4);
+		setHeight(Game.app.getHeight() / 16);
 		buildBody();
 	}
 	
 	public void doAction()
 	{
-		try {
-			Display.SAVE_WRITER.saveConfig();
+		/*try {
+			Game.SAVE_WRITER.saveConfig();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		System.exit(0);
 	}

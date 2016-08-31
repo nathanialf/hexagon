@@ -1,9 +1,9 @@
 package NewMenu.Buttons;
 
-import java.awt.geom.Rectangle2D;
+import org.newdawn.slick.geom.Rectangle;
 
-import com.game.main.Display;
-import com.game.menu.*;
+import Main.*;
+import NewMenu.*;
 
 public class ControlsButton extends MenuButton
 {
@@ -18,20 +18,20 @@ public class ControlsButton extends MenuButton
 		setText("CONTROLS");
 		setX(x);
 		setY(y);
-		setWidth(Display.WIDTH / 4);
-		setHeight(Display.HEIGHT / 16);
+		setWidth(Game.app.getWidth() / 4);
+		setHeight(Game.app.getHeight() / 16);
 		buildBody();
 	}
 	
 	public void doAction()
 	{
-		if(Display.getState().getSubState() != Display.getControlsState())
+		if(Game.getState().getSubState() != Game.getControlsState())
 		{	
-			Rectangle2D.Double newBody = new Rectangle2D.Double(Display.WIDTH / 3, -Display.getState().BASE_HEIGHT, Display.WIDTH * .66, Display.getState().BASE_HEIGHT);
+			Rectangle newBody = new Rectangle(Game.app.getWidth() / 3, -Game.getState().BASE_HEIGHT, (float) (Game.app.getWidth() * .66), Game.getState().BASE_HEIGHT);
 
-			if(Display.getState().getSubState() !=  null)
-				Display.getState().getSubState().setBackground(newBody);
-			Display.getState().setSubState(Display.getControlsState());
+			if(Game.getState().getSubState() !=  null)
+				Game.getState().getSubState().setBackground(newBody);
+			Game.getState().setSubState(Game.getControlsState());
 		}
 	}
 }

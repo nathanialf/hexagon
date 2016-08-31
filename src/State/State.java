@@ -1,6 +1,8 @@
 package State;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
 import Main.Game;
@@ -26,14 +28,14 @@ public class State
 		name = "";
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g) throws SlickException
 	{
 
 		if(getSubState() != null)
 			getSubState().render(g);
 	}
 	
-	public void update(double delta)
+	public void update(GameContainer gc, double delta)
 	{
 		//Display.getMouse().update();
 		
@@ -51,7 +53,7 @@ public class State
 		}
 		
 		if(getSubState() != null)
-			getSubState().update(delta);
+			getSubState().update(gc, delta);
 	}
 
 	public void openAnim()

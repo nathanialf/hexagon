@@ -25,7 +25,7 @@ public class ControlsState extends State
 	}
 	public void update(double delta)
 	{
-		Display.getMouse().update();
+		//Display.getMouse().update();
 		
 		if(is_open_animating)
 		{

@@ -56,7 +56,7 @@ public class SettingsState extends State
 	
 	public void render(Graphics g)
 	{
-		//g.setFont(Display.BIG_FONT);
+		g.setFont(Game.BIG_FONT);
 		
 		g.setColor(new Color(239,239,239));
 		g.fill(background);
@@ -71,7 +71,7 @@ public class SettingsState extends State
 			checkboxes[a].render(g);
 	}
 	
-	public void setBackground(Rectangle2D.Double r)	
+	public void setBackground(Rectangle r)	
 	{
 		background = r;
 		

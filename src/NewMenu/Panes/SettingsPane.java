@@ -1,15 +1,15 @@
 package NewMenu.Panes;
 
-import com.game.main.Display;
-import com.game.menu.*;
+import Main.*;
+import NewMenu.*;
 
 public class SettingsPane extends MenuPane
 {
 	public SettingsPane()
 	{
-		setX((int) (Display.WIDTH * .25));
+		setX((int) (Game.app.getWidth() * .25));
 		setY(0);
-		setHeight(Display.HEIGHT);
-		setWidth((int) (Display.WIDTH * .75));
+		setHeight(Game.app.getHeight());
+		setWidth((int) (Game.app.getWidth() * .75));
 	}
 }

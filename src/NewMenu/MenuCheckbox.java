@@ -1,14 +1,12 @@
 package NewMenu;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.geom.Rectangle2D;
-
 import javax.swing.JComponent;
 
-import com.game.main.Display;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
+
+import Main.*;
 
 public class MenuCheckbox extends JComponent
 {
@@ -27,8 +25,8 @@ public class MenuCheckbox extends JComponent
 	
 	private String text;
 	
-	protected Rectangle2D body;
-	protected Rectangle2D box = new Rectangle2D.Double(0,0,0,0);
+	protected Rectangle body;
+	protected Rectangle box = new Rectangle(0,0,0,0);
 	
 	public Color MAIN = new Color(100,175,100);
 	public Color HOVER = new Color(75, 131, 75);
@@ -41,7 +39,7 @@ public class MenuCheckbox extends JComponent
 	};
 	
 	boolean is_color_animating = false;
-	Color newColor = Color.BLACK;
+	Color newColor = Color.black;
 	
 	boolean canDoAction = true;
 	
@@ -52,6 +50,7 @@ public class MenuCheckbox extends JComponent
 	
 	public void update(double delta)
 	{
+		/*
 		if(body.contains(Display.getMouseMotion().getX(), Display.getMouseMotion().getY()))
 		{
 			if(Display.getMouse().getLeftClicked())
@@ -81,7 +80,7 @@ public class MenuCheckbox extends JComponent
 		{
 			setColor(MAIN);
 		}
-		
+		*/
 		if(is_color_animating)
 		{
 			animateColor(newColor);
@@ -90,14 +89,14 @@ public class MenuCheckbox extends JComponent
 		buildBox();
 	}
 	
-	public void render(Graphics2D g)
+	public void render(Graphics g)
 	{
-		g.setFont(Display.MEDIUM_FONT);
+		g.setFont(Game.MEDIUM_FONT);
 		g.setColor(c);
 		g.fill(body);
 		
 		g.setColor(Color.white);
-		g.drawString(getText(), (int)(body.getX() + (getWidth() * .05)), (int) (body.getY() + (body.getHeight() / 2) + (Display.MEDIUM_FONT.getSize()/2)));
+		g.drawString(getText(), (int)(body.getX() + (getWidth() * .05)), (int) (body.getY() + (body.getHeight() / 2) + (Game.MEDIUM_FONT.getLineHeight()/2)));
 		
 		g.setColor(new Color(255,255,255,50));
 		g.fillRect((int) (body.getX() + (getWidth() - (getWidth() / 40))), (int) body.getY(), getWidth() / 40, getHeight());
@@ -105,16 +104,17 @@ public class MenuCheckbox extends JComponent
 		if(getSubState() != null)
 			getSubState().render(g);*/
 		
-
+		/*
 		Image img1 = Toolkit.getDefaultToolkit().getImage("res/ui/uisheet.png");
 		g.drawImage(img1,(int) (box.getX()), (int) (box.getY()), (int) (box.getX() + box.getWidth()), (int) (box.getY() + box.getHeight()), checkbox_location[isChecked()][0], checkbox_location[isChecked()][1],  checkbox_location[isChecked()][2], checkbox_location[isChecked()][3], this);
 	    //g.drawImage(img1, getX(), (int)body.getY(), getWidth(), getHeight(), this);
 	    g.finalize();
+	    */
 	}
 
 	public void buildBody()
 	{
-		body = new Rectangle2D.Double(Display.getState().getBackground().getX() + getX(), Display.getState().getBackground().getY() + getY(), getWidth(), getHeight());
+		body = new Rectangle(Game.getState().getBackground().getX() + getX(), Game.getState().getBackground().getY() + getY(), getWidth(), getHeight());
 	}
 	
 	public void buildBox()
@@ -127,7 +127,7 @@ public class MenuCheckbox extends JComponent
 		
 		slide = new Rectangle2D.Double(sX, sY, sW, sH);
 		*/
-		box =  new Rectangle2D.Double((int)(body.getX() + (getWidth() / 2.1)), (int) body.getY() + (getHeight() / 2.75), getHeight() / 3, getHeight() / 3);
+		box =  new Rectangle((float)(body.getX() + (getWidth() / 2.1)), (float) (body.getY() + (getHeight() / 2.75)), (float)(getHeight() / 3), (float)(getHeight() / 3));
 	}
 	
 	public void doAction()
@@ -186,7 +186,7 @@ public class MenuCheckbox extends JComponent
 	
 	public void animateColor(Color newColor)
 	{
-		Color temp = Color.BLACK;
+		Color temp = Color.black;
 		int r = c.getRed(), g = c.getGreen(), b = c.getBlue();
 		
 		if(newColor == c)

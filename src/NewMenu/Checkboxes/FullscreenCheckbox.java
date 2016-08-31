@@ -1,10 +1,11 @@
 package NewMenu.Checkboxes;
 
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 
-import com.game.main.Display;
-import com.game.menu.*;
+import org.newdawn.slick.geom.Rectangle;
+
+import Main.*;
+import NewMenu.*;
 
 public class FullscreenCheckbox extends MenuCheckbox
 {
@@ -18,10 +19,10 @@ public class FullscreenCheckbox extends MenuCheckbox
 		setText("FULLSCREEN");
 		setX(x);
 		setY(y);
-		setWidth(Display.WIDTH / 4);
-		setHeight(Display.HEIGHT / 16);
+		setWidth(Game.app.getWidth() / 4);
+		setHeight(Game.app.getHeight() / 16);
 		
-		if(Display.FULLSCREEN)
+		if(Game.fullScreen)
 			setChecked(1);
 		else
 			setChecked(0);
@@ -31,17 +32,17 @@ public class FullscreenCheckbox extends MenuCheckbox
 	
 	public void buildBody()
 	{
-		if(Display.getState() == Display.getPauseState())
-			body = new Rectangle2D.Double(Display.getSettingsState().getBackground().getX() + getX(), Display.getSettingsState().getBackground().getY() + getY(), getWidth(), getHeight());
+		if(Game.getState() == Game.getPauseState())
+			body = new Rectangle(Game.getSettingsState().getBackground().getX() + getX(), Game.getSettingsState().getBackground().getY() + getY(), getWidth(), getHeight());
 	}
 	
 	public void doAction()
 	{
 		if(isChecked() == 0)
 		{
-			Display.FULLSCREEN = false;
+			Game.fullScreen = false;
 		}
 		else
-			Display.FULLSCREEN = true;
+			Game.fullScreen = true;
 	}
 }

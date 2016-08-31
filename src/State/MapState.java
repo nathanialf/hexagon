@@ -1,6 +1,7 @@
 package State;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -25,7 +26,7 @@ public class MapState extends State
 		background = new Rectangle(Game.app.getWidth() / 3, -Game.app.getHeight(), Game.app.getWidth(), Game.app.getHeight()); 
 		BASE_HEIGHT = Game.app.getHeight();
 	}
-	public void update(double delta)
+	public void update(GameContainer gc, double delta)
 	{
 		//Display.getMouse().update();
 		

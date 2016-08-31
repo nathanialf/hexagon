@@ -2,9 +2,11 @@ package NewMenu.Buttons;
 
 import java.awt.geom.Rectangle2D;
 
-import com.game.main.*;
-import com.game.menu.*;
-import com.game.state.*;
+import org.newdawn.slick.geom.Rectangle;
+
+import Main.*;
+import NewMenu.*;
+import State.*;
 
 public class BackButton extends MenuButton
 {
@@ -18,19 +20,19 @@ public class BackButton extends MenuButton
 		setText("BACK");
 		setX(x);
 		setY(y);
-		setWidth(Display.WIDTH / 4);
-		setHeight(Display.HEIGHT / 16);
+		setWidth(Game.app.getWidth() / 4);
+		setHeight(Game.app.getHeight() / 16);
 		buildBody();
 	}
 	
 	public void buildBody()
 	{
-		if(Display.getState() == Display.getPauseState())
-			body = new Rectangle2D.Double(Display.getState().getSubState().getBackground().getX(), Display.getState().getSubState().getBackground().getY() + getY(), getWidth(), getHeight());
+		if(Game.getState() == Game.getPauseState())
+			body = new Rectangle(Game.getState().getSubState().getBackground().getX(), Game.getState().getSubState().getBackground().getY() + getY(), getWidth(), getHeight());
 	}
 	
 	public void doAction()
 	{
-		Display.getState().setSubState(new State());
+		Game.getState().setSubState(new State());
 	}
 }
