@@ -23,7 +23,7 @@ import State.PauseState;
 import State.PlayState;
 import State.SettingsState;
 import State.State;
-
+import State.StatisticsState;
 import Cell.Hexagon;
 import Main.Game;
 import Menu.MainMenu;
@@ -96,8 +96,6 @@ public class Game extends BasicGame
 	//Save Configuration
 	public static SaveConfig SAVE_CONFIG;
 	
-
-	
 	//GAME STATE
 	//Will define what needs to happen when in each state to
 	//improve performance over previous games
@@ -107,6 +105,7 @@ public class Game extends BasicGame
 	private static SettingsState SETTINGS_STATE;
 	private static ControlsState CONTROLS_STATE;
 	private static MapState MAP_STATE;
+	private static StatisticsState STATISTICS_STATE;
 	
 
 	public static Font BIG_FONT;
@@ -139,7 +138,6 @@ public class Game extends BasicGame
 	public void init(GameContainer gc) throws SlickException
 	{
 		//MULTIPLES OF 8
-		//hexSize = 2;
 		hexSize *= 8;
 		
 		AL.destroy();
@@ -201,6 +199,7 @@ public class Game extends BasicGame
 		PAUSE_STATE = new PauseState();
 		SETTINGS_STATE = new SettingsState();
 		CONTROLS_STATE = new ControlsState();
+		STATISTICS_STATE = new StatisticsState();
 		MAP_STATE = new MapState();
 	}
 
@@ -296,6 +295,10 @@ public class Game extends BasicGame
 				{
 					fullScreen = Boolean.parseBoolean(values[1]);
 				}
+				if(values[0].equals("AntiAliasing"))
+				{
+					alias = Boolean.parseBoolean(values[1]);
+				}
 				if(values[0].equals("Volume"))
 				{
 					volume = (float) (Double.parseDouble(values[1]) / 100);
@@ -325,6 +328,7 @@ public class Game extends BasicGame
 		green = 0;
 		//Color State
 		colorState = 0;
+		
 		//sets up start time for logging
 		startTime = System.currentTimeMillis();
 		//sets the container to hold the game
@@ -441,6 +445,7 @@ public class Game extends BasicGame
 	public static SettingsState getSettingsState()			{return SETTINGS_STATE;}
 	public static ControlsState getControlsState()			{return CONTROLS_STATE;}
 	public static MapState getMapState()					{return MAP_STATE;}
+	public static StatisticsState getStatisticsState()		{return STATISTICS_STATE;}
 	
 	public static void setState(State s)		
 	{

@@ -18,7 +18,8 @@ public class PauseState extends State
     		new MapButton(0, base_y + (Game.app.getHeight() / 16) + 16), 
     		new SettingsButton(0, base_y + (((Game.app.getHeight() / 16) + 16) * 2)),
     		new ControlsButton(0, base_y + (((Game.app.getHeight() / 16) + 16) * 3)),
-    		new ExitButton(0, base_y + (((Game.app.getHeight() / 16) + 16) * 4))};
+    		new StatisticsButton(0, base_y + (((Game.app.getHeight() / 16) + 16) * 4)),
+    		new ExitButton(0, base_y + (((Game.app.getHeight() / 16) + 16) * 5))};
     
 	public PauseState()
 	{

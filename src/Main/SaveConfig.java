@@ -16,6 +16,7 @@ public class SaveConfig
 
 		fw.write("Resolution-" + Game.app.getWidth() + "x" + Game.app.getHeight() + "\n");
 		fw.write("Fullscreen-" + Game.fullScreen + "\n");
+		fw.write("AntiAliasing-" + Game.alias + "\n");
 		fw.write("Volume-" + Game.volume * 100 + "\n");
 		fw.write("Hexes-" + Game.size + "\n");
 		fw.write("Size-" + Game.hexSize / 8);
