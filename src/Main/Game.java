@@ -2,9 +2,11 @@ package Main;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -89,6 +91,11 @@ public class Game extends BasicGame
 	//if the game is paused this will be the menu displayed
 	//public static Menu currentMenu;
 	
+	//Configuration File
+	public static File config;
+	//Save Configuration
+	public static SaveConfig SAVE_CONFIG;
+	
 
 	
 	//GAME STATE
@@ -132,7 +139,7 @@ public class Game extends BasicGame
 	public void init(GameContainer gc) throws SlickException
 	{
 		//MULTIPLES OF 8
-		hexSize = 2;
+		//hexSize = 2;
 		hexSize *= 8;
 		
 		AL.destroy();
@@ -259,6 +266,57 @@ public class Game extends BasicGame
     
 	public static void main (String args[]) throws SlickException
 	{
+		//imports configurations for the game
+		//All pertinent information will live there
+		config = new File("res/config.ini");
+				
+		try 
+		{
+			@SuppressWarnings("resource")
+			Scanner reader = new Scanner(config);
+			
+			while(reader.hasNextLine())
+			{
+				String line = reader.nextLine();
+				String values[] = line.split("-");
+				if(values[0].equals("Resolution"))
+				{
+					if(values[1].equals("automatic"))
+					{
+						
+					}
+					else
+					{
+						String dimensions [] = values[1].split("x");
+						w = Integer.parseInt(dimensions[0]);
+						h = Integer.parseInt(dimensions[1]);
+					}
+				}
+				if(values[0].equals("Fullscreen"))
+				{
+					fullScreen = Boolean.parseBoolean(values[1]);
+				}
+				if(values[0].equals("Volume"))
+				{
+					volume = (float) (Double.parseDouble(values[1]) / 100);
+				}
+				if(values[0].equals("Hexes"))
+				{
+					size = Integer.parseInt(values[1]);
+				}
+				if(values[0].equals("Size"))
+				{
+					hexSize = Integer.parseInt(values[1]);
+				}
+			}
+		} 
+		catch (FileNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		SAVE_CONFIG = new SaveConfig();
+		
 		//Red
 		red = 255;
 		//Blue

@@ -31,7 +31,7 @@ public class SettingsState extends State
 		{
 			if(background.getY() < 0)
 			{
-				background = new Rectangle(background.getX(), background.getY() + (background.getHeight() / 15), background.getWidth(), background.getHeight());
+				background = new Rectangle(background.getX(), (float) (background.getY() + (background.getHeight() / 165) * (.5 * delta)), background.getWidth(), background.getHeight());
 
 				for(int a = 0; a < buttons.length; a++)
 					buttons[a].buildBody();
@@ -44,6 +44,12 @@ public class SettingsState extends State
 			{
 				background = new Rectangle(background.getX(), 0, background.getWidth(), background.getHeight());
 				is_open_animating = false;
+				for(int a = 0; a < buttons.length; a++)
+					buttons[a].buildBody();
+				for(int a = 0; a < sliders.length; a++)
+					sliders[a].buildBody();
+				for(int a = 0; a < checkboxes.length; a++)
+					checkboxes[a].buildBody();
 			}
 		}
 

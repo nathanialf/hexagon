@@ -20,6 +20,6 @@ public class StatisticsButton extends MenuButton
 	
 	public void activate()
 	{
-		Game.currentMenu = new StatisticMenu();
+		//Game.currentMenu = new StatisticMenu();
 	}
 }

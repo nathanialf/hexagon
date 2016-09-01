@@ -29,6 +29,6 @@ public class ApplyButton extends MenuButton
 		}
 		Game.adjust(Game.app.getWidth() / 2, Game.app.getHeight() / 2);
 		
-		Game.currentMenu = new MainMenu();
+		//Game.currentMenu = new MainMenu();
 	}
 }

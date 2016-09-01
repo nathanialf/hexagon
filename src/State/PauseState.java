@@ -34,7 +34,7 @@ public class PauseState extends State
 		{	
 			if(background.getY() < 0)
 			{
-				background = new Rectangle(background.getX(), (float) (background.getY() + (background.getHeight() / 160) * (.5 * delta)), background.getWidth(), background.getHeight());
+				background = new Rectangle(background.getX(), (float) (background.getY() + (background.getHeight() / 165) * (.5 * delta)), background.getWidth(), background.getHeight());
 				
 				for(int a = 0; a < buttons.length; a++)
 					buttons[a].buildBody();
@@ -43,6 +43,11 @@ public class PauseState extends State
 			{
 				background = new Rectangle(0, 0, background.getWidth(), background.getHeight());
 				is_open_animating = false;
+				
+				for(int a = 0; a < buttons.length; a++)
+				{
+					buttons[a].buildBody();
+				}
 			}
 		}
 		

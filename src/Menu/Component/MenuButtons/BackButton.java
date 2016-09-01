@@ -27,6 +27,6 @@ public class BackButton extends MenuButton
 	
 	public void activate()
 	{
-		Game.currentMenu = new MainMenu();
+		//Game.currentMenu = new MainMenu();
 	}
 }

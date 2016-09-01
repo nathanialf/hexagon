@@ -29,6 +29,6 @@ public class SaveButton extends MenuButton
 			e.printStackTrace();
 		}
 		
-		Game.currentMenu.set();
+		//Game.currentMenu.set();
 	}
 }

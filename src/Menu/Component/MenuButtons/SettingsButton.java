@@ -20,6 +20,6 @@ public class SettingsButton extends MenuButton
 	
 	public void activate()
 	{
-		Game.currentMenu = new SettingMenu();
+		//Game.currentMenu = new SettingMenu();
 	}
 }

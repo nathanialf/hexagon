@@ -29,6 +29,6 @@ public class LoadButton extends MenuButton
 			e.printStackTrace();
 		}
 		
-		Game.currentMenu.set();
+		//Game.currentMenu.set();
 	}
 }
