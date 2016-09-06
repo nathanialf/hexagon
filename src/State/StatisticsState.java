@@ -9,6 +9,7 @@ import Main.*;
 import NewMenu.*;
 import NewMenu.Buttons.*;
 import NewMenu.Checkboxes.*;
+import NewMenu.Information.StatisticInformation;
 import NewMenu.Sliders.*;
 
 public class StatisticsState extends State
@@ -17,6 +18,7 @@ public class StatisticsState extends State
     MenuButton buttons [] = {new BackButton(Game.app.getWidth() / 3, base_y)};
     MenuSlider sliders [] = {};
     MenuCheckbox checkboxes [] =  {};
+    MenuInformation information [] =  {new StatisticInformation(Game.app.getWidth() / 3, base_y + (Game.app.getHeight() / 16) + 16)};
     
 	public StatisticsState()
 	{
@@ -40,6 +42,8 @@ public class StatisticsState extends State
 					sliders[a].buildBody();
 				for(int a = 0; a < checkboxes.length; a++)
 					checkboxes[a].buildBody();
+				for(int a = 0; a < information.length; a++)
+					information[a].buildBody();
 			}
 			else
 			{
@@ -51,6 +55,8 @@ public class StatisticsState extends State
 					sliders[a].buildBody();
 				for(int a = 0; a < checkboxes.length; a++)
 					checkboxes[a].buildBody();
+				for(int a = 0; a < information.length; a++)
+					information[a].buildBody();
 			}
 		}
 
@@ -60,6 +66,8 @@ public class StatisticsState extends State
 			sliders[a].update(gc, delta);
 		for(int a = 0; a < checkboxes.length; a++)
 			checkboxes[a].update(gc, delta);
+		for(int a = 0; a < information.length; a++)
+			information[a].update(gc, delta);
 	}
 	
 	public void render(Graphics g)
@@ -77,6 +85,8 @@ public class StatisticsState extends State
 			sliders[a].render(g);
 		for(int a = 0; a < checkboxes.length; a++)
 			checkboxes[a].render(g);
+		for(int a = 0; a < information.length; a++)
+			information[a].render(g);
 	}
 	
 	public void setBackground(Rectangle r)	
@@ -89,6 +99,8 @@ public class StatisticsState extends State
 			sliders[a].buildBody();
 		for(int a = 0; a < checkboxes.length; a++)
 			checkboxes[a].buildBody();
+		for(int a = 0; a < information.length; a++)
+			information[a].buildBody();
 	}
 
 	public void openAnim()
@@ -101,5 +113,7 @@ public class StatisticsState extends State
 			sliders[a].buildBody();
 		for(int a = 0; a < checkboxes.length; a++)
 			checkboxes[a].buildBody();
+		for(int a = 0; a < information.length; a++)
+			information[a].buildBody();
 	}
 }

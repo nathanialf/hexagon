@@ -1,7 +1,5 @@
 package NewMenu.Buttons;
 
-import java.awt.geom.Rectangle2D;
-
 import org.newdawn.slick.geom.Rectangle;
 
 import Main.*;
