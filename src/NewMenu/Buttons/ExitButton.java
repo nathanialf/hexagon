@@ -1,7 +1,5 @@
 package NewMenu.Buttons;
 
-import java.io.IOException;
-
 import Main.*;
 import NewMenu.*;
 

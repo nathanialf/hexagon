@@ -1,7 +1,5 @@
 package Menu.Component.MenuButtons;
 
-import Main.Game;
-import Menu.SettingMenu;
 import Menu.Component.MenuButton;
 import Menu.Component.MenuElement;
 

@@ -5,11 +5,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
-import Main.*;
 import NewMenu.*;
 import NewMenu.Buttons.*;
-import NewMenu.Checkboxes.*;
-import NewMenu.Sliders.*;
 
 import Main.Game;
 

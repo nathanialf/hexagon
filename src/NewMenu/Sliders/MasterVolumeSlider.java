@@ -41,6 +41,7 @@ public class MasterVolumeSlider extends MenuSlider
 		Game.volume = (float) getValue() / 100;
 		Game.sound.stop();
 		Game.sound.loop(1, Game.volume);
+		
 		try {
 			Game.SAVE_CONFIG.Save();
 		} catch (IOException e) {

@@ -8,9 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 import Main.*;
 import NewMenu.*;
 import NewMenu.Buttons.*;
-import NewMenu.Checkboxes.*;
 import NewMenu.Information.StatisticInformation;
-import NewMenu.Sliders.*;
 
 public class StatisticsState extends State
 {

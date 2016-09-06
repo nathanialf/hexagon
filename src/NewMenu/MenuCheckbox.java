@@ -5,6 +5,7 @@ import javax.swing.JComponent;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 
 import Main.*;
@@ -51,14 +52,14 @@ public class MenuCheckbox extends JComponent
 	
 	public void update(GameContainer gc, double delta)
 	{
-		/*
-		if(body.contains(Display.getMouseMotion().getX(), Display.getMouseMotion().getY()))
+		
+		if(body.contains(gc.getInput().getMouseX(), gc.getInput().getMouseY()))
 		{
-			if(Display.getMouse().getLeftClicked())
+			if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON))
 			{
 				//setColor(CLICK);
 
-				if(box.contains(Display.getMouseMotion().getX(), Display.getMouseMotion().getY()) && canDoAction)
+				if(box.contains(gc.getInput().getMouseX(), gc.getInput().getMouseY()) && canDoAction)
 				{
 					//setValue((int)((Display.getMouseMotion().getX() - slide.getX()) / slide.getWidth() * 100));
 					if(isChecked() == 0)
@@ -81,7 +82,7 @@ public class MenuCheckbox extends JComponent
 		{
 			setColor(MAIN);
 		}
-		*/
+		
 		if(is_color_animating)
 		{
 			animateColor(newColor);
@@ -104,6 +105,8 @@ public class MenuCheckbox extends JComponent
 /*
 		if(getSubState() != null)
 			getSubState().render(g);*/
+		
+		g.drawImage(Game.UI, (int) (box.getX()), (int) (box.getY()), (int) (box.getX() + box.getWidth()), (int) (box.getY() + box.getHeight()), checkbox_location[isChecked()][0], checkbox_location[isChecked()][1],  checkbox_location[isChecked()][2], checkbox_location[isChecked()][3]);
 		
 		/*
 		Image img1 = Toolkit.getDefaultToolkit().getImage("res/ui/uisheet.png");
@@ -128,7 +131,7 @@ public class MenuCheckbox extends JComponent
 		
 		slide = new Rectangle2D.Double(sX, sY, sW, sH);
 		*/
-		box =  new Rectangle((float)(body.getX() + (getWidth() / 2.1)), (float) (body.getY() + (getHeight() / 2.75)), (float)(getHeight() / 3), (float)(getHeight() / 3));
+		box =  new Rectangle((float)(body.getX() + (getWidth() * .85)), (float) (body.getY() + (getHeight() / 2.75)), (float)(getHeight() / 3), (float)(getHeight() / 3));
 	}
 	
 	public void doAction()

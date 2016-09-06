@@ -44,5 +44,12 @@ public class FullscreenCheckbox extends MenuCheckbox
 		}
 		else
 			Game.fullScreen = true;
+		
+		try {
+			Game.SAVE_CONFIG.Save();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -3,7 +3,6 @@ package Menu.Component.MenuButtons;
 import org.newdawn.slick.SlickException;
 
 import Main.Game;
-import Menu.MainMenu;
 import Menu.Component.MenuButton;
 import Menu.Component.MenuElement;
 

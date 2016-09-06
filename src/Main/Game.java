@@ -26,10 +26,6 @@ import State.State;
 import State.StatisticsState;
 import Cell.Hexagon;
 import Main.Game;
-import Menu.MainMenu;
-import Menu.Menu;
-import Menu.Component.MenuButton;
-import Menu.Component.MenuElement;
 
 public class Game extends BasicGame 
 {
@@ -112,6 +108,8 @@ public class Game extends BasicGame
 	public static Font MEDIUM_FONT;
 	public static Font SMALL_FONT;
 	
+	public static Image UI;
+	
 	public Game() 
 	{
 		//whats at the top of the window
@@ -139,6 +137,8 @@ public class Game extends BasicGame
 	{
 		//MULTIPLES OF 8
 		hexSize *= 8;
+		
+		UI = new Image("res/ui/uisheet.png");
 		
 		AL.destroy();
 		sound = new Sound("res/Sounds/Arpology2.wav");

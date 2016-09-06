@@ -1,5 +1,7 @@
 package NewMenu.Checkboxes;
 
+import java.io.IOException;
+
 import org.newdawn.slick.geom.Rectangle;
 
 import Main.*;
@@ -35,9 +37,16 @@ public class AntialiasCheckbox extends MenuCheckbox
 	{
 		if(isChecked() == 0)
 		{
-			Game.fullScreen = false;
+			Game.alias = false;
 		}
 		else
-			Game.fullScreen = true;
+			Game.alias = true;
+		
+		try {
+			Game.SAVE_CONFIG.Save();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
