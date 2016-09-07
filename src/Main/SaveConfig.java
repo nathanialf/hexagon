@@ -19,7 +19,6 @@ public class SaveConfig
 		fw.write("AntiAliasing-" + Game.alias + "\n");
 		fw.write("Volume-" + Game.volume * 100 + "\n");
 		fw.write("Hexes-" + Game.size + "\n");
-		fw.write("Size-" + Game.hexSize / 8);
 		
 		fw.close();
 	}

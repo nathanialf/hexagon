@@ -136,7 +136,7 @@ public class Game extends BasicGame
 	public void init(GameContainer gc) throws SlickException
 	{
 		//MULTIPLES OF 8
-		hexSize *= 8;
+		//hexSize *= 8;
 		
 		UI = new Image("res/ui/uisheet.png");
 		
@@ -148,6 +148,8 @@ public class Game extends BasicGame
 			app.setDisplayMode(app.getScreenWidth(), app.getScreenHeight(), fullScreen);
 		else
 			app.setDisplayMode(/*Integer.parseInt(currentMenu.menubuttons.get(2).elements.get(2).textfields.get(0).getText())*/Game.w, /*Integer.parseInt(currentMenu.menubuttons.get(2).elements.get(2).textfields.get(1).getText())*/Game.h, fullScreen);
+
+		hexSize = app.getWidth() / 80;
 		
 		if (hexes.size() < size)
 		{
@@ -306,10 +308,6 @@ public class Game extends BasicGame
 				if(values[0].equals("Hexes"))
 				{
 					size = Integer.parseInt(values[1]);
-				}
-				if(values[0].equals("Size"))
-				{
-					hexSize = Integer.parseInt(values[1]);
 				}
 			}
 		} 
